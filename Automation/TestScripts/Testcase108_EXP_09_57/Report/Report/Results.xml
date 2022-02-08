@@ -1,0 +1,1681 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE Report
+[
+<!ELEMENT Report (General ,(Doc|BPT)) >
+<!ATTLIST Report ver CDATA #REQUIRED tmZone CDATA #REQUIRED>
+
+<!ELEMENT General ( DocLocation ) >
+<!ATTLIST General productName CDATA #REQUIRED productVer CDATA #REQUIRED os CDATA #REQUIRED host CDATA #REQUIRED qcserver CDATA #IMPLIED qcproject CDATA #IMPLIED SolManSolutionId CDATA #IMPLIED SolManProjectId CDATA #IMPLIED SolManTestPlanId CDATA #IMPLIED SolManTestPackageId CDATA #IMPLIED SolManUserInfoData CDATA #IMPLIED  >
+
+<!ELEMENT BPT (DName,Res,DVer?,TSet?,TInst?,NodeArgs,AdditionalInfo*,Doc*) >
+<!ATTLIST BPT rID ID #REQUIRED >
+
+<!ELEMENT Doc (DName,ConfName?,Res,DVer?,TSet?,TInst?,RunType?,DT?,AdditionalInfo*,Step*,DIter*,Step*,Action*,Doc*,Summary?,TestMaintenanceSummary*,NodeArgs?) >
+<!ATTLIST Doc rID ID #REQUIRED type (Test|BC|BPTWrapperTest|Flow|Group|Action) "Test" productName CDATA #REQUIRED BCIter CDATA #IMPLIED >
+
+<!ELEMENT RunType ( #PCDATA )>
+<!ATTLIST RunType fmStep (False|True) "False" batch (False|True) "False" upDesc (False|True) "False" upChk (False|True) "False" upAS (False|True) "False">
+
+<!ELEMENT DName ( #PCDATA ) >
+
+<!ELEMENT ConfName ( #PCDATA ) >
+
+<!ELEMENT Res ( #PCDATA ) >
+
+<!ELEMENT AdditionalInfo (AdditionalDataName,AdditionalDataValue ) >
+
+<!ELEMENT AdditionalDataName ( #PCDATA ) >
+
+<!ELEMENT AdditionalDataValue ( #PCDATA ) >
+
+<!ELEMENT DVer ( #PCDATA ) >
+
+<!ELEMENT TSet ( #PCDATA ) >
+
+<!ELEMENT TInst ( #PCDATA ) >
+
+<!ELEMENT DIter (Step*,Action+,Summary?,NodeArgs)>
+<!ATTLIST DIter rID ID #REQUIRED iterID CDATA #REQUIRED>
+
+<!ELEMENT DocLocation ( #PCDATA )>
+
+<!ELEMENT Action (AName,AIter*,(Step|HtmlStep|Action)*, Summary,ActionMaintenanceSummary*, NodeArgs ) >
+<!ATTLIST Action rID ID #REQUIRED>
+
+<!ELEMENT AIter ((Step|HtmlStep|Action)*,DataMapping?, Summary?,NodeArgs) >
+<!ATTLIST AIter rID ID #REQUIRED iterID CDATA #REQUIRED isCountable (False|True) "False" >
+
+<!ELEMENT AName ( #PCDATA ) >
+
+<!ELEMENT TestMaintenanceSummary (ActionMaintenanceSummary*) >
+<!ATTLIST TestMaintenanceSummary ObjectsAdded CDATA #REQUIRED ObjectsUpdated CDATA #REQUIRED StepsUpdated CDATA #REQUIRED StepsComments CDATA #REQUIRED><!ELEMENT ActionMaintenanceSummary (ObjectChange* ) >
+<!ATTLIST ActionMaintenanceSummary Action CDATA #REQUIRED Objects CDATA #REQUIRED Updated CDATA #REQUIRED LinesTotal CDATA #REQUIRED Added CDATA #REQUIRED LinesUpdated CDATA #REQUIRED>
+
+<!ELEMENT ObjectChange  (Hierarchy, PropertyChangeList* ) >
+<!ATTLIST ObjectChange Operation CDATA #IMPLIED OriginalRepository CDATA #IMPLIED>
+
+<!ELEMENT PropertyChangeList (PropertyDef*) >
+
+<!ELEMENT PropertyDef (OriginalValue, NewValue) >
+<!ATTLIST PropertyDef PropName CDATA #REQUIRED OriginRegularExpression (True|False) "False" NewRegularExpression (True|False) "False" AddedProperty (True|False) "False" >
+
+<!ELEMENT OriginalValue ( #PCDATA )>
+
+<!ELEMENT NewValue ( #PCDATA )>
+
+<!ELEMENT Hierarchy  (ObjectName, Hierarchy*) >
+<!ATTLIST Hierarchy MicClass CDATA #REQUIRED>
+
+<!ELEMENT ObjectName  ( #PCDATA ) >
+
+<!ELEMENT Step (Obj,Details,Time,TimeTick* ,(Step|HtmlStep|Doc)*, DataMapping?, NodeArgs) >
+<!ATTLIST Step rID ID #REQUIRED retval CDATA #IMPLIED>
+
+<!ELEMENT HtmlStep (HTML,TimeTick*,(Step|HtmlStep|Doc)*,NodeArgs) >
+<!ATTLIST HtmlStep rID ID #REQUIRED >
+
+<!ELEMENT Obj ( #PCDATA ) >
+<!ATTLIST Obj plainTxt (False|True) "True">
+
+<!ELEMENT Details ( #PCDATA ) >
+<!ATTLIST Details plainTxt (False|True) "True">
+
+<!ELEMENT Time ( #PCDATA ) >
+
+<!ELEMENT HTML ( #PCDATA ) >
+
+<!ELEMENT Disp ( #PCDATA ) >
+
+<!ELEMENT TimeTick ( #PCDATA ) >
+
+<!ELEMENT DataMapping ( DataMappedItem* )>
+<!ELEMENT DataMappedItem EMPTY >
+<!ATTLIST DataMappedItem dsName CDATA #REQUIRED >
+<!ATTLIST DataMappedItem rowId CDATA #REQUIRED >
+
+<!ELEMENT NodeArgs (Disp,TopPane?,BtmPane?,ExtendedInfo? )>
+<!ATTLIST NodeArgs eType CDATA #REQUIRED icon CDATA #REQUIRED nRep CDATA #REQUIRED UserNote CDATA #IMPLIED filter (False|True) "True">
+<!ATTLIST NodeArgs status (Passed|Failed|Done|Warning|Information) "Done">
+<!ATTLIST NodeArgs iconSel CDATA #IMPLIED nType CDATA #IMPLIED MovieMarker CDATA "">
+<!ATTLIST NodeArgs Source CDATA #IMPLIED SourceLine CDATA #IMPLIED StepFlowItemKey CDATA #IMPLIED >
+
+<!ELEMENT TopPane (Path)>
+
+<!ELEMENT BtmPane ( (Path|WR)?,ASHilite?)>
+<!ATTLIST BtmPane vType CDATA "HTML">
+
+<!ELEMENT Path ( #PCDATA ) >
+
+<!ELEMENT ASHilite ( #PCDATA ) >
+
+<!ELEMENT WR ( #PCDATA ) >
+
+<!ELEMENT ExtendedInfo ( StepData ) >
+
+<!ATTLIST ExtendedInfo StepType CDATA #REQUIRED>
+<!ELEMENT DT (NodeArgs) >
+<!ATTLIST DT rID ID #REQUIRED>
+
+<!ELEMENT Summary (Param*)>
+<!ATTLIST Summary sTime CDATA #IMPLIED eTime CDATA #IMPLIED passed CDATA #IMPLIED failed CDATA #IMPLIED warnings CDATA #IMPLIED retval CDATA #IMPLIED stopped (False|True) "False" >
+
+<!ELEMENT Param (ParamName,ParamVal)+ >
+<!ATTLIST Param paramInOut (In|Out) "In">
+
+<!ELEMENT ParamName ( #PCDATA ) >
+
+<!ELEMENT ParamVal ( #PCDATA ) >
+
+]
+>
+<Report ver="2.0" tmZone="GMT Standard Time">
+<General productName="Micro Focus Unified Functional Testing" productVer="15.0.2" os="" host="AO2E2E919R5"><DocLocation><![CDATA[C:\Banking\Automation\TestScripts\Testcase108_EXP_09_57]]></DocLocation></General>
+<Doc rID="T1"   productName= "Micro Focus Unified Functional Testing"  >
+<DName><![CDATA[Testcase108_EXP_09_57]]></DName>
+<Res><![CDATA[Report]]></Res>
+<DT rID="T2">
+<NodeArgs eType="Table" icon="374" nRep="4" filter="False" >
+<Disp><![CDATA[Run-Time Data Table]]></Disp>
+<BtmPane vType="Table" >
+<Path><![CDATA[Default.xlsx]]></Path>
+</BtmPane>
+</NodeArgs>
+</DT>
+<DIter rID="T3" iterID="1" >
+<Action rID="T4">
+<AName><![CDATA[Action1]]></AName>
+<Step rID="T5">
+<Obj plainTxt="False" ><![CDATA[LoadFunctionLibrary]]></Obj>
+<Details plainTxt="False" ><![CDATA[LoadFunctionLibrary function passed]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:11]]></Time>
+<TimeTick>1632144431</TimeTick>
+<NodeArgs eType="Replay" icon="377" nRep="8" status="Passed" Source="Action1" SourceLine="-1" >
+<Disp><![CDATA[LoadFunctionLibrary]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T6">
+<Obj plainTxt="False" ><![CDATA[LoadFunctionLibrary]]></Obj>
+<Details plainTxt="False" ><![CDATA[LoadFunctionLibrary function passed]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:11]]></Time>
+<TimeTick>1632144431</TimeTick>
+<NodeArgs eType="Replay" icon="377" nRep="9" status="Passed" Source="Action1" SourceLine="-1" >
+<Disp><![CDATA[LoadFunctionLibrary]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T7">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:13]]></Time>
+<TimeTick>1632144433</TimeTick>
+<Step rID="T8">
+<Obj plainTxt="False" ><![CDATA[Log Off.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:13]]></Time>
+<TimeTick>1632144433</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="11" >
+<Disp><![CDATA[Log Off.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T9">
+<Obj plainTxt="False" ><![CDATA[Log Off.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:33]]></Time>
+<TimeTick>1632144453</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="13" status="Warning" >
+<Disp><![CDATA[Log Off.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T10">
+<Obj plainTxt="False" ><![CDATA[Log Off]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object&nbsp;is&nbsp;disabled]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:33]]></Time>
+<TimeTick>1632144453</TimeTick>
+<Step rID="T11">
+<Obj plainTxt="False" ><![CDATA[Log Off]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaButton<br>Label = Log Off<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:33]]></Time>
+<TimeTick>1632144453</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="16" status="Warning" nType="Description" >
+<Disp><![CDATA[Log Off]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="15" status="Failed" nType="Run Error" >
+<Disp><![CDATA[Log Off]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="10" status="Failed" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T12">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:33]]></Time>
+<TimeTick>1632144453</TimeTick>
+<Step rID="T13">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object is disabled<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (11): &quot;		JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Log Off&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:33]]></Time>
+<TimeTick>1632144453</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="18" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="10" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf2.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T14">
+<Obj plainTxt="False" ><![CDATA[Till.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:36]]></Time>
+<TimeTick>1632144456</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="20" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Till.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="17" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf1.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T15">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:58]]></Time>
+<TimeTick>1632144478</TimeTick>
+<Step rID="T16">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[General run error.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (72): &quot;			JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Login&quot;).Highlight&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:27:58]]></Time>
+<TimeTick>1632144478</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="23" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="71" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf4.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T17">
+<Obj plainTxt="False" ><![CDATA[Login.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["100"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:19]]></Time>
+<TimeTick>1632144499</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="26" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T18">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Login"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:19]]></Time>
+<TimeTick>1632144499</TimeTick>
+<Step rID="T19">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = Login<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:19]]></Time>
+<TimeTick>1632144499</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="29" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="28" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="22" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf3.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T20">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:19]]></Time>
+<TimeTick>1632144499</TimeTick>
+<Step rID="T21">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Login&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (73): &quot;			JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Login&quot;).Set strUsername&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:19]]></Time>
+<TimeTick>1632144499</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="31" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="72" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf6.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T22">
+<Obj plainTxt="False" ><![CDATA[Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:39]]></Time>
+<TimeTick>1632144519</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="34" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T23">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Login"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:39]]></Time>
+<TimeTick>1632144519</TimeTick>
+<Step rID="T24">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = Login<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:39]]></Time>
+<TimeTick>1632144519</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="37" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="36" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="30" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf5.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T25">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:39]]></Time>
+<TimeTick>1632144519</TimeTick>
+<Step rID="T26">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Login&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (74): &quot;			JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Login&quot;).Activate&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:28:39]]></Time>
+<TimeTick>1632144519</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="39" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="73" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf8.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="38" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf7.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T27">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:00]]></Time>
+<TimeTick>1632144540</TimeTick>
+<Step rID="T28">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[General run error.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (75): &quot;			JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Login&quot;).Highlight&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:00]]></Time>
+<TimeTick>1632144540</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="42" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="74" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf10.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T29">
+<Obj plainTxt="False" ><![CDATA[Login.SetSecure]]></Obj>
+<Details plainTxt="False" ><![CDATA["5fc097abb195b0915582818a640b"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:21]]></Time>
+<TimeTick>1632144561</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="45" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login.SetSecure]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T30">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Login"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:21]]></Time>
+<TimeTick>1632144561</TimeTick>
+<Step rID="T31">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = Login<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:21]]></Time>
+<TimeTick>1632144561</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="48" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="47" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="41" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf9.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T32">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:21]]></Time>
+<TimeTick>1632144561</TimeTick>
+<Step rID="T33">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Login&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (76): &quot;			JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Login&quot;).SetSecure strPassword&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:21]]></Time>
+<TimeTick>1632144561</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="50" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="75" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf12.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T34">
+<Obj plainTxt="False" ><![CDATA[Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:41]]></Time>
+<TimeTick>1632144581</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="53" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T35">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Login"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:41]]></Time>
+<TimeTick>1632144581</TimeTick>
+<Step rID="T36">
+<Obj plainTxt="False" ><![CDATA[Login]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = Login<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:41]]></Time>
+<TimeTick>1632144581</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="56" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="55" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Login]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="49" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf11.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T37">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:41]]></Time>
+<TimeTick>1632144581</TimeTick>
+<Step rID="T38">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Login&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (77): &quot;			JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Login&quot;).Activate&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:41]]></Time>
+<TimeTick>1632144581</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="58" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="76" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf14.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T39">
+<Obj plainTxt="False" ><![CDATA[Override.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:48]]></Time>
+<TimeTick>1632144588</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="60" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Override.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T40">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:50]]></Time>
+<TimeTick>1632144590</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="61" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T41">
+<Obj plainTxt="False" ><![CDATA[Yes.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:50]]></Time>
+<TimeTick>1632144590</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="63" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T42">
+<Obj plainTxt="False" ><![CDATA[Confirm.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:29:55]]></Time>
+<TimeTick>1632144595</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="65" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T43">
+<Obj plainTxt="False" ><![CDATA[Enter PLU or IMEI.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["5013742200473"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:17]]></Time>
+<TimeTick>1632144617</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="68" status="Warning" >
+<Disp><![CDATA[Enter PLU or IMEI.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T44">
+<Obj plainTxt="False" ><![CDATA[Enter PLU or IMEI]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Enter&nbsp;PLU&nbsp;or&nbsp;IMEI"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:17]]></Time>
+<TimeTick>1632144617</TimeTick>
+<Step rID="T45">
+<Obj plainTxt="False" ><![CDATA[Enter PLU or IMEI]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = Enter PLU or IMEI<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:17]]></Time>
+<TimeTick>1632144617</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="71" status="Warning" nType="Description" >
+<Disp><![CDATA[Enter PLU or IMEI]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="70" status="Failed" nType="Run Error" >
+<Disp><![CDATA[Enter PLU or IMEI]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="57" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf13.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T46">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:17]]></Time>
+<TimeTick>1632144617</TimeTick>
+<Step rID="T47">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Enter PLU or IMEI&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2490): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;Enter PLU or IMEI&quot;).Set intPLU&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:17]]></Time>
+<TimeTick>1632144617</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="73" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2489" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf16.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T48">
+<Obj plainTxt="False" ><![CDATA[Enter.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:19]]></Time>
+<TimeTick>1632144619</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="75" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Enter.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T49">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:23]]></Time>
+<TimeTick>1632144623</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="77" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T50">
+<Obj plainTxt="False" ><![CDATA[OK.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:23]]></Time>
+<TimeTick>1632144623</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="78" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[OK.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T51">
+<Obj plainTxt="False" ><![CDATA[OK.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:24]]></Time>
+<TimeTick>1632144624</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="80" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[OK.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T52">
+<Obj plainTxt="False" ><![CDATA[Total.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:46]]></Time>
+<TimeTick>1632144646</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="83" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Total.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T53">
+<Obj plainTxt="False" ><![CDATA[Total]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Total"&nbsp;(of&nbsp;class&nbsp;JavaButton).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:46]]></Time>
+<TimeTick>1632144646</TimeTick>
+<Step rID="T54">
+<Obj plainTxt="False" ><![CDATA[Total]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaButton<br>Label = Total<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:46]]></Time>
+<TimeTick>1632144646</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="86" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Total]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="85" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Total]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="72" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf15.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T55">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:46]]></Time>
+<TimeTick>1632144646</TimeTick>
+<Step rID="T56">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Total&quot; (of class JavaButton).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2501): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Total&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:30:46]]></Time>
+<TimeTick>1632144646</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="88" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2500" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf18.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T57">
+<Obj plainTxt="False" ><![CDATA[icon-checkbox.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["ON"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:09]]></Time>
+<TimeTick>1632144669</TimeTick>
+<NodeArgs eType="Replay" icon="382" nRep="91" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[icon-checkbox.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T58">
+<Obj plainTxt="False" ><![CDATA[icon-checkbox]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"icon-checkbox"&nbsp;(of&nbsp;class&nbsp;JavaCheckBox).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:09]]></Time>
+<TimeTick>1632144669</TimeTick>
+<Step rID="T59">
+<Obj plainTxt="False" ><![CDATA[icon-checkbox]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>Toolkit Class = dtv.ui.swing.DtvCheckBox<br>to_class = JavaCheckBox<br>Index = 1<br>Attached Text = icon-checkbox<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:09]]></Time>
+<TimeTick>1632144669</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="94" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[icon-checkbox]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="382" nRep="93" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[icon-checkbox]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="87" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf17.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T60">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:09]]></Time>
+<TimeTick>1632144669</TimeTick>
+<Step rID="T61">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;icon-checkbox&quot; (of class JavaCheckBox).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2503): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaCheckBox(&quot;icon-checkbox&quot;).Set &quot;ON&quot;&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:09]]></Time>
+<TimeTick>1632144669</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="96" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2502" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf20.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T62">
+<Obj plainTxt="False" ><![CDATA[Confirm.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:31]]></Time>
+<TimeTick>1632144691</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="99" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T63">
+<Obj plainTxt="False" ><![CDATA[Confirm]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Confirm"&nbsp;(of&nbsp;class&nbsp;JavaButton).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:31]]></Time>
+<TimeTick>1632144691</TimeTick>
+<Step rID="T64">
+<Obj plainTxt="False" ><![CDATA[Confirm]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>Toolkit Class = dtv.ui.swing.DtvButton<br>to_class = JavaButton<br>Label = Confirm<br>Index = 1<br>Attached Text = Confirm<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:31]]></Time>
+<TimeTick>1632144691</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="102" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="101" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="95" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf19.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T65">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:31]]></Time>
+<TimeTick>1632144691</TimeTick>
+<Step rID="T66">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Confirm&quot; (of class JavaButton).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2505): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Confirm&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:31]]></Time>
+<TimeTick>1632144691</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="104" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2504" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf22.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T67">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:35]]></Time>
+<TimeTick>1632144695</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="106" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T68">
+<Obj plainTxt="False" ><![CDATA[Sale Payment Options.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#2"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:58]]></Time>
+<TimeTick>1632144718</TimeTick>
+<NodeArgs eType="Replay" icon="383" nRep="109" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Sale Payment Options.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T69">
+<Obj plainTxt="False" ><![CDATA[Sale Payment Options]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Sale&nbsp;Payment&nbsp;Options"&nbsp;(of&nbsp;class&nbsp;JavaList).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:58]]></Time>
+<TimeTick>1632144718</TimeTick>
+<Step rID="T70">
+<Obj plainTxt="False" ><![CDATA[Sale Payment Options]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaList<br>Attached Text = Sale Payment Options<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:58]]></Time>
+<TimeTick>1632144718</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="112" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Sale Payment Options]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="383" nRep="111" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Sale Payment Options]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="103" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf21.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T71">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:58]]></Time>
+<TimeTick>1632144718</TimeTick>
+<Step rID="T72">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Sale Payment Options&quot; (of class JavaList).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2511): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaList(&quot;Sale Payment Options&quot;).Select &quot;#2&quot;&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:31:58]]></Time>
+<TimeTick>1632144718</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="114" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2510" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf24.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T73">
+<Obj plainTxt="False" ><![CDATA[Confirm.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:23]]></Time>
+<TimeTick>1632144743</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="117" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T74">
+<Obj plainTxt="False" ><![CDATA[Confirm]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Confirm"&nbsp;(of&nbsp;class&nbsp;JavaButton).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:23]]></Time>
+<TimeTick>1632144743</TimeTick>
+<Step rID="T75">
+<Obj plainTxt="False" ><![CDATA[Confirm]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>Toolkit Class = dtv.ui.swing.DtvButton<br>to_class = JavaButton<br>Label = Confirm<br>Index = 1<br>Attached Text = Confirm<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:23]]></Time>
+<TimeTick>1632144743</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="120" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="119" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Confirm]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="113" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf23.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T76">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:23]]></Time>
+<TimeTick>1632144743</TimeTick>
+<Step rID="T77">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Confirm&quot; (of class JavaButton).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2518): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Confirm&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:23]]></Time>
+<TimeTick>1632144743</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="122" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2517" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf26.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T78">
+<Obj plainTxt="False" ><![CDATA[VOUCHER.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["3465202"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:45]]></Time>
+<TimeTick>1632144765</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="125" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[VOUCHER.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T79">
+<Obj plainTxt="False" ><![CDATA[VOUCHER]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"VOUCHER"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:45]]></Time>
+<TimeTick>1632144765</TimeTick>
+<Step rID="T80">
+<Obj plainTxt="False" ><![CDATA[VOUCHER]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = VOUCHER<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:45]]></Time>
+<TimeTick>1632144765</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="128" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[VOUCHER]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="127" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[VOUCHER]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="121" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf25.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T81">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:45]]></Time>
+<TimeTick>1632144765</TimeTick>
+<Step rID="T82">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;VOUCHER&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2520): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;VOUCHER&quot;).Set intVoucher&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:45]]></Time>
+<TimeTick>1632144765</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="130" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2519" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf28.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T83">
+<Obj plainTxt="False" ><![CDATA[Enter.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:32:47]]></Time>
+<TimeTick>1632144767</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="132" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Enter.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T84">
+<Obj plainTxt="False" ><![CDATA[VOUCHER.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["15.00"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:10]]></Time>
+<TimeTick>1632144790</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="135" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[VOUCHER.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T85">
+<Obj plainTxt="False" ><![CDATA[VOUCHER]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"VOUCHER"&nbsp;(of&nbsp;class&nbsp;JavaEdit).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:10]]></Time>
+<TimeTick>1632144790</TimeTick>
+<Step rID="T86">
+<Obj plainTxt="False" ><![CDATA[VOUCHER]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaEdit<br>Attached Text = VOUCHER<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:10]]></Time>
+<TimeTick>1632144790</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="138" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[VOUCHER]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="381" nRep="137" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[VOUCHER]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="129" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf27.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T87">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:10]]></Time>
+<TimeTick>1632144790</TimeTick>
+<Step rID="T88">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;VOUCHER&quot; (of class JavaEdit).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2524): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaEdit(&quot;VOUCHER&quot;).Set intVoucherAmt&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:10]]></Time>
+<TimeTick>1632144790</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="140" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2523" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf30.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T89">
+<Obj plainTxt="False" ><![CDATA[Enter.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:32]]></Time>
+<TimeTick>1632144812</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="142" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Enter.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T90">
+<Obj plainTxt="False" ><![CDATA[Enter]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object&nbsp;is&nbsp;disabled]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:32]]></Time>
+<TimeTick>1632144812</TimeTick>
+<Step rID="T91">
+<Obj plainTxt="False" ><![CDATA[Enter]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaButton<br>Label = Enter<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:32]]></Time>
+<TimeTick>1632144812</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="145" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Enter]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="144" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Enter]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="139" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf29.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T92">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:32]]></Time>
+<TimeTick>1632144812</TimeTick>
+<Step rID="T93">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object is disabled<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (2526): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Enter&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:32]]></Time>
+<TimeTick>1632144812</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="147" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="2525" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf32.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T94">
+<Obj plainTxt="False" ><![CDATA[OK.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:34]]></Time>
+<TimeTick>1632144814</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="148" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[OK.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T95">
+<Obj plainTxt="False" ><![CDATA[OK.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:34]]></Time>
+<TimeTick>1632144814</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="150" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[OK.Click]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="146" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf31.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T96">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[Window]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:57]]></Time>
+<TimeTick>1632144837</TimeTick>
+<Step rID="T97">
+<Obj plainTxt="False" ><![CDATA[Save Print Output As]]></Obj>
+<Details plainTxt="False" ><![CDATA[Dialog]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:57]]></Time>
+<TimeTick>1632144837</TimeTick>
+<Step rID="T98">
+<Obj plainTxt="False" ><![CDATA[Cancel.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:33:57]]></Time>
+<TimeTick>1632144837</TimeTick>
+<NodeArgs eType="Replay" icon="386" nRep="157" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Cancel.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="385" nRep="156" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Save Print Output As]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="384" nRep="155" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T99">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:00]]></Time>
+<TimeTick>1632144840</TimeTick>
+<Step rID="T100">
+<Obj plainTxt="False" ><![CDATA[Back Office.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:00]]></Time>
+<TimeTick>1632144840</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="159" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Back Office.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T101">
+<Obj plainTxt="False" ><![CDATA[Back Office.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:00]]></Time>
+<TimeTick>1632144840</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="161" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Back Office.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T102">
+<Obj plainTxt="False" ><![CDATA[Log Off.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:03]]></Time>
+<TimeTick>1632144843</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="163" >
+<Disp><![CDATA[Log Off.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T103">
+<Obj plainTxt="False" ><![CDATA[Back Office.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:05]]></Time>
+<TimeTick>1632144845</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="165" >
+<Disp><![CDATA[Back Office.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T104">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["100"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:05]]></Time>
+<TimeTick>1632144845</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="167" >
+<Disp><![CDATA[Back Office Login.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T105">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:05]]></Time>
+<TimeTick>1632144845</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="169" >
+<Disp><![CDATA[Back Office Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T106">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.SetSecure]]></Obj>
+<Details plainTxt="False" ><![CDATA["5fc097abb195b0915582818a640b"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:05]]></Time>
+<TimeTick>1632144845</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="171" >
+<Disp><![CDATA[Back Office Login.SetSecure]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T107">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:05]]></Time>
+<TimeTick>1632144845</TimeTick>
+<NodeArgs eType="Replay" icon="381" nRep="173" >
+<Disp><![CDATA[Back Office Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T108">
+<Obj plainTxt="False" ><![CDATA[Override.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:10]]></Time>
+<TimeTick>1632144850</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="175" >
+<Disp><![CDATA[Override.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T109">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:12]]></Time>
+<TimeTick>1632144852</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="176" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T110">
+<Obj plainTxt="False" ><![CDATA[Yes.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:13]]></Time>
+<TimeTick>1632144853</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="178" >
+<Disp><![CDATA[Yes.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T111">
+<Obj plainTxt="False" ><![CDATA[Confirm.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:16]]></Time>
+<TimeTick>1632144856</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="179" >
+<Disp><![CDATA[Confirm.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T112">
+<Obj plainTxt="False" ><![CDATA[Confirm.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:16]]></Time>
+<TimeTick>1632144856</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="181" >
+<Disp><![CDATA[Confirm.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T113">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#6"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:16]]></Time>
+<TimeTick>1632144856</TimeTick>
+<NodeArgs eType="Replay" icon="383" nRep="183" >
+<Disp><![CDATA[Main Menu.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T114">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#0"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:19]]></Time>
+<TimeTick>1632144859</TimeTick>
+<NodeArgs eType="Replay" icon="383" nRep="185" >
+<Disp><![CDATA[Main Menu.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T115">
+<Obj plainTxt="False" ><![CDATA[Manual Declare.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:49]]></Time>
+<TimeTick>1632144889</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="188" status="Warning" >
+<Disp><![CDATA[Manual Declare.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T116">
+<Obj plainTxt="False" ><![CDATA[Manual Declare]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Manual&nbsp;Declare"&nbsp;(of&nbsp;class&nbsp;JavaButton).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:49]]></Time>
+<TimeTick>1632144889</TimeTick>
+<Step rID="T117">
+<Obj plainTxt="False" ><![CDATA[Manual Declare]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaButton<br>Label = Manual Declare<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:49]]></Time>
+<TimeTick>1632144889</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="191" status="Warning" nType="Description" >
+<Disp><![CDATA[Manual Declare]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="190" status="Failed" nType="Run Error" >
+<Disp><![CDATA[Manual Declare]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="158" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T118">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:49]]></Time>
+<TimeTick>1632144889</TimeTick>
+<Step rID="T119">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Manual Declare&quot; (of class JavaButton).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (3733): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Manual Declare&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:34:49]]></Time>
+<TimeTick>1632144889</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="193" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="3732" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf34.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T120">
+<Obj plainTxt="False" ><![CDATA[Count Complete.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:12]]></Time>
+<TimeTick>1632144912</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="196" status="Warning" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Count Complete.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T121">
+<Obj plainTxt="False" ><![CDATA[Count Complete]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot&nbsp;identify&nbsp;the&nbsp;object&nbsp;"Count&nbsp;Complete"&nbsp;(of&nbsp;class&nbsp;JavaButton).<br/>Verify&nbsp;that&nbsp;this&nbsp;object's&nbsp;properties&nbsp;match&nbsp;an&nbsp;object&nbsp;currently&nbsp;displayed&nbsp;in&nbsp;your&nbsp;application.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:12]]></Time>
+<TimeTick>1632144912</TimeTick>
+<Step rID="T122">
+<Obj plainTxt="False" ><![CDATA[Count Complete]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaButton<br>Label = Count Complete<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:12]]></Time>
+<TimeTick>1632144912</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="199" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Count Complete]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="379" nRep="198" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Count Complete]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="192" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf33.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T123">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:12]]></Time>
+<TimeTick>1632144912</TimeTick>
+<Step rID="T124">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[Cannot identify the object &quot;Count Complete&quot; (of class JavaButton).<BR/>Verify that this object's properties match an object currently displayed in your application.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (3735): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Count Complete&quot;).Click&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:12]]></Time>
+<TimeTick>1632144912</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="201" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="3734" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf36.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T125">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:44]]></Time>
+<TimeTick>1632144944</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="203" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="200" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf35.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T126">
+<Obj ><![CDATA[Banking]]></Obj>
+<Details ><![CDATA[Confirmation screen is displayed UnSuccessfully]]></Details>
+<Time><![CDATA[9/20/2021 - 14:35:44]]></Time>
+<TimeTick>1632144944</TimeTick>
+<NodeArgs eType="User" icon="387" nRep="204" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Banking]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T127">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[Window]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:19]]></Time>
+<TimeTick>1632145039</TimeTick>
+<Step rID="T128">
+<Obj plainTxt="False" ><![CDATA[Save Print Output As]]></Obj>
+<Details plainTxt="False" ><![CDATA[Dialog]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:19]]></Time>
+<TimeTick>1632145039</TimeTick>
+<Step rID="T129">
+<Obj plainTxt="False" ><![CDATA[Cancel.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:19]]></Time>
+<TimeTick>1632145039</TimeTick>
+<NodeArgs eType="Replay" icon="386" nRep="211" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Cancel.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="385" nRep="210" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Save Print Output As]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="384" nRep="209" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T130">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:21]]></Time>
+<TimeTick>1632145041</TimeTick>
+<Step rID="T131">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#7"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:21]]></Time>
+<TimeTick>1632145041</TimeTick>
+<NodeArgs eType="Replay" icon="383" nRep="214" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Main Menu.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T132">
+<Obj plainTxt="False" ><![CDATA[Main Menu]]></Obj>
+<Details plainTxt="False" ><![CDATA[The&nbsp;statement&nbsp;contains&nbsp;one&nbsp;or&nbsp;more&nbsp;invalid&nbsp;function&nbsp;arguments.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:21]]></Time>
+<TimeTick>1632145041</TimeTick>
+<Step rID="T133">
+<Obj plainTxt="False" ><![CDATA[Main Menu]]></Obj>
+<Details plainTxt="False" ><![CDATA[Object's physical description:<br>to_class = JavaList<br>]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:21]]></Time>
+<TimeTick>1632145041</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="216" status="Warning" nType="Description" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Main Menu]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Replay" icon="383" nRep="215" status="Failed" nType="Run Error" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Main Menu]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="213" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T134">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:21]]></Time>
+<TimeTick>1632145041</TimeTick>
+<Step rID="T135">
+<Obj plainTxt="False" ><![CDATA[Run Error]]></Obj>
+<Details plainTxt="False" ><![CDATA[The statement contains one or more invalid function arguments.<BR/>Function file: C:\Banking\Automation\FunctionLibrary\Banking.qfl<BR/>Line (149): &quot;JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaList(&quot;Main Menu&quot;).Select &quot;#7&quot;&quot;.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:21]]></Time>
+<TimeTick>1632145041</TimeTick>
+<NodeArgs eType="Replay" icon="380" nRep="218" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="148" >
+<Disp><![CDATA[Run Error]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf38.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T136">
+<Obj plainTxt="False" ><![CDATA[OK.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:23]]></Time>
+<TimeTick>1632145043</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="220" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[OK.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T137">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:33]]></Time>
+<TimeTick>1632145053</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="222" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T138">
+<Obj plainTxt="False" ><![CDATA[Count Complete.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:38]]></Time>
+<TimeTick>1632145058</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="224" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Count Complete.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T139">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:48]]></Time>
+<TimeTick>1632145068</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="226" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="217" status="Failed" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+<BtmPane vType="ViewerGen.SSViewerGen" >
+<Path><![CDATA[ZIP::Act1\Row0\ssf37.xml]]></Path>
+<ASHilite><![CDATA[1]]></ASHilite>
+</BtmPane>
+</NodeArgs>
+</Step>
+<Step rID="T140">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[Window]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:52]]></Time>
+<TimeTick>1632145072</TimeTick>
+<Step rID="T141">
+<Obj plainTxt="False" ><![CDATA[Save Print Output As.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:52]]></Time>
+<TimeTick>1632145072</TimeTick>
+<NodeArgs eType="Replay" icon="385" nRep="229" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Save Print Output As.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="384" nRep="228" Source="C:\Banking\Automation\FunctionLibrary\Banking.qfl" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T142">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:53]]></Time>
+<TimeTick>1632145073</TimeTick>
+<Step rID="T143">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:53]]></Time>
+<TimeTick>1632145073</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="231" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T144">
+<Obj plainTxt="False" ><![CDATA[Back_2.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:53]]></Time>
+<TimeTick>1632145073</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="233" >
+<Disp><![CDATA[Back_2.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T145">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:54]]></Time>
+<TimeTick>1632145074</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="234" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T146">
+<Obj plainTxt="False" ><![CDATA[Back_2.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:54]]></Time>
+<TimeTick>1632145074</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="236" >
+<Disp><![CDATA[Back_2.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T147">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:55]]></Time>
+<TimeTick>1632145075</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="237" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T148">
+<Obj plainTxt="False" ><![CDATA[Back_2.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:55]]></Time>
+<TimeTick>1632145075</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="239" >
+<Disp><![CDATA[Back_2.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T149">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:56]]></Time>
+<TimeTick>1632145076</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="240" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T150">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:57]]></Time>
+<TimeTick>1632145077</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="241" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T151">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:58]]></Time>
+<TimeTick>1632145078</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="242" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T152">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:37:59]]></Time>
+<TimeTick>1632145079</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="243" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T153">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:38:00]]></Time>
+<TimeTick>1632145080</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="244" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T154">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:38:01]]></Time>
+<TimeTick>1632145081</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="245" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T155">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 14:38:02]]></Time>
+<TimeTick>1632145082</TimeTick>
+<NodeArgs eType="Replay" icon="379" nRep="246" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T156">
+<Obj plainTxt="False" ><![CDATA[Stop Run]]></Obj>
+<Details plainTxt="False" ><![CDATA[Run stopped by user.]]></Details>
+<Time><![CDATA[9/20/2021 - 14:38:02]]></Time>
+<TimeTick>1632145082</TimeTick>
+<NodeArgs eType="General" icon="388" nRep="247" status="Information" >
+<Disp><![CDATA[Stop Run]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="378" nRep="230" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Summary sTime="9/20/2021 - 14:27:08" eTime="9/20/2021 - 14:38:02" passed="2" failed="37" warnings="33" ></Summary>
+<NodeArgs eType="StartAction" icon="376" nRep="7" status="Failed" >
+<Disp><![CDATA[Action1 Summary]]></Disp>
+</NodeArgs>
+</Action>
+<NodeArgs eType="StartIteration" icon="375" nRep="6" status="Failed" >
+<Disp><![CDATA[Testcase108_EXP_09_57 Iteration 1 (Row 1)]]></Disp>
+</NodeArgs>
+</DIter>
+<Summary sTime="9/20/2021 - 14:27:06" eTime="9/20/2021 - 14:38:02" passed="2" failed="37" warnings="33" ></Summary>
+<NodeArgs eType="StartTest" icon="373" nRep="3" status="Failed" >
+<Disp><![CDATA[Test Testcase108_EXP_09_57 Summary]]></Disp>
+</NodeArgs>
+</Doc>
+</Report>

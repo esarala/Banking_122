@@ -1,0 +1,9 @@
+﻿<Properties>
+  <WatchEntry0 value="strLoginType" />
+  <WatchEntry1 value="DirPath" />
+  <WatchEntry2 value="TestScriptRootPath" />
+  <WatchEntry3 value="strScriptLoc" />
+  <WatchEntry4 value="spath" />
+  <WatchEntry5 value="DirPath&amp;&quot;\FunctionLibrary\Banking.qfl&quot;" />
+  <WatchEntry6 value="spath(0)&amp;&quot;\&quot;&amp;spath(1)&amp;&quot;\&quot;&amp;spathd(2)" />
+</Properties>

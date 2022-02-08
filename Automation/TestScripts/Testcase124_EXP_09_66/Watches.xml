@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="intAmount" />
+  <WatchEntry1 value="DataTable.Value(&quot;Amount&quot;)" />
+  <WatchEntry2 value="intBagReference1" />
+</Properties>

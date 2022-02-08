@@ -1,0 +1,660 @@
+﻿<?xml version="1.0"?>
+<!DOCTYPE Report
+[
+<!ELEMENT Report (General ,(Doc|BPT)) >
+<!ATTLIST Report ver CDATA #REQUIRED tmZone CDATA #REQUIRED>
+
+<!ELEMENT General ( DocLocation ) >
+<!ATTLIST General productName CDATA #REQUIRED productVer CDATA #REQUIRED os CDATA #REQUIRED host CDATA #REQUIRED qcserver CDATA #IMPLIED qcproject CDATA #IMPLIED SolManSolutionId CDATA #IMPLIED SolManProjectId CDATA #IMPLIED SolManTestPlanId CDATA #IMPLIED SolManTestPackageId CDATA #IMPLIED SolManUserInfoData CDATA #IMPLIED  >
+
+<!ELEMENT BPT (DName,Res,DVer?,TSet?,TInst?,NodeArgs,AdditionalInfo*,Doc*) >
+<!ATTLIST BPT rID ID #REQUIRED >
+
+<!ELEMENT Doc (DName,ConfName?,Res,DVer?,TSet?,TInst?,RunType?,DT?,AdditionalInfo*,Step*,DIter*,Step*,Action*,Doc*,Summary?,TestMaintenanceSummary*,NodeArgs?) >
+<!ATTLIST Doc rID ID #REQUIRED type (Test|BC|BPTWrapperTest|Flow|Group|Action) "Test" productName CDATA #REQUIRED BCIter CDATA #IMPLIED >
+
+<!ELEMENT RunType ( #PCDATA )>
+<!ATTLIST RunType fmStep (False|True) "False" batch (False|True) "False" upDesc (False|True) "False" upChk (False|True) "False" upAS (False|True) "False">
+
+<!ELEMENT DName ( #PCDATA ) >
+
+<!ELEMENT ConfName ( #PCDATA ) >
+
+<!ELEMENT Res ( #PCDATA ) >
+
+<!ELEMENT AdditionalInfo (AdditionalDataName,AdditionalDataValue ) >
+
+<!ELEMENT AdditionalDataName ( #PCDATA ) >
+
+<!ELEMENT AdditionalDataValue ( #PCDATA ) >
+
+<!ELEMENT DVer ( #PCDATA ) >
+
+<!ELEMENT TSet ( #PCDATA ) >
+
+<!ELEMENT TInst ( #PCDATA ) >
+
+<!ELEMENT DIter (Step*,Action+,Summary?,NodeArgs)>
+<!ATTLIST DIter rID ID #REQUIRED iterID CDATA #REQUIRED>
+
+<!ELEMENT DocLocation ( #PCDATA )>
+
+<!ELEMENT Action (AName,AIter*,(Step|HtmlStep|Action)*, Summary,ActionMaintenanceSummary*, NodeArgs ) >
+<!ATTLIST Action rID ID #REQUIRED>
+
+<!ELEMENT AIter ((Step|HtmlStep|Action)*,DataMapping?, Summary?,NodeArgs) >
+<!ATTLIST AIter rID ID #REQUIRED iterID CDATA #REQUIRED isCountable (False|True) "False" >
+
+<!ELEMENT AName ( #PCDATA ) >
+
+<!ELEMENT TestMaintenanceSummary (ActionMaintenanceSummary*) >
+<!ATTLIST TestMaintenanceSummary ObjectsAdded CDATA #REQUIRED ObjectsUpdated CDATA #REQUIRED StepsUpdated CDATA #REQUIRED StepsComments CDATA #REQUIRED><!ELEMENT ActionMaintenanceSummary (ObjectChange* ) >
+<!ATTLIST ActionMaintenanceSummary Action CDATA #REQUIRED Objects CDATA #REQUIRED Updated CDATA #REQUIRED LinesTotal CDATA #REQUIRED Added CDATA #REQUIRED LinesUpdated CDATA #REQUIRED>
+
+<!ELEMENT ObjectChange  (Hierarchy, PropertyChangeList* ) >
+<!ATTLIST ObjectChange Operation CDATA #IMPLIED OriginalRepository CDATA #IMPLIED>
+
+<!ELEMENT PropertyChangeList (PropertyDef*) >
+
+<!ELEMENT PropertyDef (OriginalValue, NewValue) >
+<!ATTLIST PropertyDef PropName CDATA #REQUIRED OriginRegularExpression (True|False) "False" NewRegularExpression (True|False) "False" AddedProperty (True|False) "False" >
+
+<!ELEMENT OriginalValue ( #PCDATA )>
+
+<!ELEMENT NewValue ( #PCDATA )>
+
+<!ELEMENT Hierarchy  (ObjectName, Hierarchy*) >
+<!ATTLIST Hierarchy MicClass CDATA #REQUIRED>
+
+<!ELEMENT ObjectName  ( #PCDATA ) >
+
+<!ELEMENT Step (Obj,Details,Time,TimeTick* ,(Step|HtmlStep|Doc)*, DataMapping?, NodeArgs) >
+<!ATTLIST Step rID ID #REQUIRED retval CDATA #IMPLIED>
+
+<!ELEMENT HtmlStep (HTML,TimeTick*,(Step|HtmlStep|Doc)*,NodeArgs) >
+<!ATTLIST HtmlStep rID ID #REQUIRED >
+
+<!ELEMENT Obj ( #PCDATA ) >
+<!ATTLIST Obj plainTxt (False|True) "True">
+
+<!ELEMENT Details ( #PCDATA ) >
+<!ATTLIST Details plainTxt (False|True) "True">
+
+<!ELEMENT Time ( #PCDATA ) >
+
+<!ELEMENT HTML ( #PCDATA ) >
+
+<!ELEMENT Disp ( #PCDATA ) >
+
+<!ELEMENT TimeTick ( #PCDATA ) >
+
+<!ELEMENT DataMapping ( DataMappedItem* )>
+<!ELEMENT DataMappedItem EMPTY >
+<!ATTLIST DataMappedItem dsName CDATA #REQUIRED >
+<!ATTLIST DataMappedItem rowId CDATA #REQUIRED >
+
+<!ELEMENT NodeArgs (Disp,TopPane?,BtmPane?,ExtendedInfo? )>
+<!ATTLIST NodeArgs eType CDATA #REQUIRED icon CDATA #REQUIRED nRep CDATA #REQUIRED UserNote CDATA #IMPLIED filter (False|True) "True">
+<!ATTLIST NodeArgs status (Passed|Failed|Done|Warning|Information) "Done">
+<!ATTLIST NodeArgs iconSel CDATA #IMPLIED nType CDATA #IMPLIED MovieMarker CDATA "">
+<!ATTLIST NodeArgs Source CDATA #IMPLIED SourceLine CDATA #IMPLIED StepFlowItemKey CDATA #IMPLIED >
+
+<!ELEMENT TopPane (Path)>
+
+<!ELEMENT BtmPane ( (Path|WR)?,ASHilite?)>
+<!ATTLIST BtmPane vType CDATA "HTML">
+
+<!ELEMENT Path ( #PCDATA ) >
+
+<!ELEMENT ASHilite ( #PCDATA ) >
+
+<!ELEMENT WR ( #PCDATA ) >
+
+<!ELEMENT ExtendedInfo ( StepData ) >
+
+<!ATTLIST ExtendedInfo StepType CDATA #REQUIRED>
+<!ELEMENT DT (NodeArgs) >
+<!ATTLIST DT rID ID #REQUIRED>
+
+<!ELEMENT Summary (Param*)>
+<!ATTLIST Summary sTime CDATA #IMPLIED eTime CDATA #IMPLIED passed CDATA #IMPLIED failed CDATA #IMPLIED warnings CDATA #IMPLIED retval CDATA #IMPLIED stopped (False|True) "False" >
+
+<!ELEMENT Param (ParamName,ParamVal)+ >
+<!ATTLIST Param paramInOut (In|Out) "In">
+
+<!ELEMENT ParamName ( #PCDATA ) >
+
+<!ELEMENT ParamVal ( #PCDATA ) >
+
+]
+>
+<Report ver="2.0" tmZone="GMT Standard Time">
+<General productName="Micro Focus Unified Functional Testing" productVer="15.0.2" os="" host="AO2E2E919R5"><DocLocation><![CDATA[C:\Banking\Automation\TestScripts\Testcase70_CH_256_01]]></DocLocation></General>
+<Doc rID="T1"   productName= "Micro Focus Unified Functional Testing"  >
+<DName><![CDATA[Testcase70_CH_256_01]]></DName>
+<Res><![CDATA[Report]]></Res>
+<DT rID="T2">
+<NodeArgs eType="Table" icon="318" nRep="4" filter="False" >
+<Disp><![CDATA[Run-Time Data Table]]></Disp>
+<BtmPane vType="Table" >
+<Path><![CDATA[Default.xlsx]]></Path>
+</BtmPane>
+</NodeArgs>
+</DT>
+<Action rID="T3">
+<AName><![CDATA[Action1]]></AName>
+<Step rID="T4">
+<Obj plainTxt="False" ><![CDATA[LoadFunctionLibrary]]></Obj>
+<Details plainTxt="False" ><![CDATA[LoadFunctionLibrary function passed]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:21]]></Time>
+<TimeTick>1632150261</TimeTick>
+<NodeArgs eType="Replay" icon="320" nRep="7" status="Passed" Source="Action1" SourceLine="-1" >
+<Disp><![CDATA[LoadFunctionLibrary]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T5">
+<Obj plainTxt="False" ><![CDATA[LoadFunctionLibrary]]></Obj>
+<Details plainTxt="False" ><![CDATA[LoadFunctionLibrary function passed]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:22]]></Time>
+<TimeTick>1632150262</TimeTick>
+<NodeArgs eType="Replay" icon="320" nRep="8" status="Passed" Source="Action1" SourceLine="-1" >
+<Disp><![CDATA[LoadFunctionLibrary]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T6">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:26]]></Time>
+<TimeTick>1632150266</TimeTick>
+<Step rID="T7">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:26]]></Time>
+<TimeTick>1632150266</TimeTick>
+<NodeArgs eType="Replay" icon="322" nRep="11" Source="Action1" SourceLine="-1" >
+<Disp><![CDATA[Main Menu.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T8">
+<Obj plainTxt="False" ><![CDATA[Log Off.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:28]]></Time>
+<TimeTick>1632150268</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="13" >
+<Disp><![CDATA[Log Off.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T9">
+<Obj plainTxt="False" ><![CDATA[Back Office.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="15" >
+<Disp><![CDATA[Back Office.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T10">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["100"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="17" >
+<Disp><![CDATA[Back Office Login.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T11">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="19" >
+<Disp><![CDATA[Back Office Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T12">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.SetSecure]]></Obj>
+<Details plainTxt="False" ><![CDATA["5fc097abb195b0915582818a640b"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="21" >
+<Disp><![CDATA[Back Office Login.SetSecure]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T13">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="23" >
+<Disp><![CDATA[Back Office Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T14">
+<Obj plainTxt="False" ><![CDATA[Override.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="24" >
+<Disp><![CDATA[Override.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T15">
+<Obj plainTxt="False" ><![CDATA[Override.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:30]]></Time>
+<TimeTick>1632150270</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="26" >
+<Disp><![CDATA[Override.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T16">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:32]]></Time>
+<TimeTick>1632150272</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="27" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T17">
+<Obj plainTxt="False" ><![CDATA[Yes.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:32]]></Time>
+<TimeTick>1632150272</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="29" >
+<Disp><![CDATA[Yes.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T18">
+<Obj plainTxt="False" ><![CDATA[Confirm.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:35]]></Time>
+<TimeTick>1632150275</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="30" >
+<Disp><![CDATA[Confirm.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T19">
+<Obj plainTxt="False" ><![CDATA[Confirm.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:35]]></Time>
+<TimeTick>1632150275</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="32" >
+<Disp><![CDATA[Confirm.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T20">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#6"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:37]]></Time>
+<TimeTick>1632150277</TimeTick>
+<NodeArgs eType="Replay" icon="322" nRep="34" >
+<Disp><![CDATA[Main Menu.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T21">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#0"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:39]]></Time>
+<TimeTick>1632150279</TimeTick>
+<NodeArgs eType="Replay" icon="322" nRep="36" >
+<Disp><![CDATA[Main Menu.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T22">
+<Obj plainTxt="False" ><![CDATA[Manual Declare.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:49]]></Time>
+<TimeTick>1632150289</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="38" >
+<Disp><![CDATA[Manual Declare.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T23">
+<Obj plainTxt="False" ><![CDATA[Count Complete.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:51]]></Time>
+<TimeTick>1632150291</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="40" >
+<Disp><![CDATA[Count Complete.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T24">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:55]]></Time>
+<TimeTick>1632150295</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="41" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T25">
+<Obj plainTxt="False" ><![CDATA[Yes.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:55]]></Time>
+<TimeTick>1632150295</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="43" >
+<Disp><![CDATA[Yes.Click]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="321" nRep="10" Source="Action1" SourceLine="-1" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T26">
+<Obj ><![CDATA[Banking]]></Obj>
+<Details ><![CDATA[Confirmation screen is displayed Successfully]]></Details>
+<Time><![CDATA[9/20/2021 - 16:04:55]]></Time>
+<TimeTick>1632150295</TimeTick>
+<NodeArgs eType="User" icon="325" nRep="44" status="Passed" >
+<Disp><![CDATA[Banking]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T27">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[Window]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:30]]></Time>
+<TimeTick>1632150390</TimeTick>
+<Step rID="T28">
+<Obj plainTxt="False" ><![CDATA[Save Print Output As]]></Obj>
+<Details plainTxt="False" ><![CDATA[Dialog]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:30]]></Time>
+<TimeTick>1632150390</TimeTick>
+<Step rID="T29">
+<Obj plainTxt="False" ><![CDATA[Cancel.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:30]]></Time>
+<TimeTick>1632150390</TimeTick>
+<NodeArgs eType="Replay" icon="328" nRep="51" >
+<Disp><![CDATA[Cancel.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="327" nRep="50" >
+<Disp><![CDATA[Save Print Output As]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="326" nRep="49" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T30">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:32]]></Time>
+<TimeTick>1632150392</TimeTick>
+<Step rID="T31">
+<Obj plainTxt="False" ><![CDATA[Back_2.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:32]]></Time>
+<TimeTick>1632150392</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="53" >
+<Disp><![CDATA[Back_2.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T32">
+<Obj plainTxt="False" ><![CDATA[Back_2.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:32]]></Time>
+<TimeTick>1632150392</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="55" >
+<Disp><![CDATA[Back_2.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T33">
+<Obj plainTxt="False" ><![CDATA[Log Off.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:34]]></Time>
+<TimeTick>1632150394</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="57" >
+<Disp><![CDATA[Log Off.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T34">
+<Obj plainTxt="False" ><![CDATA[Back Office.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="59" >
+<Disp><![CDATA[Back Office.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T35">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Set]]></Obj>
+<Details plainTxt="False" ><![CDATA["100"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="61" >
+<Disp><![CDATA[Back Office Login.Set]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T36">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="63" >
+<Disp><![CDATA[Back Office Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T37">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.SetSecure]]></Obj>
+<Details plainTxt="False" ><![CDATA["5fc097abb195b0915582818a640b"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="65" >
+<Disp><![CDATA[Back Office Login.SetSecure]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T38">
+<Obj plainTxt="False" ><![CDATA[Back Office Login.Activate]]></Obj>
+<Details plainTxt="False" ><![CDATA[]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="324" nRep="67" >
+<Disp><![CDATA[Back Office Login.Activate]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T39">
+<Obj plainTxt="False" ><![CDATA[Override.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="68" >
+<Disp><![CDATA[Override.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T40">
+<Obj plainTxt="False" ><![CDATA[Override.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:36]]></Time>
+<TimeTick>1632150396</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="70" >
+<Disp><![CDATA[Override.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T41">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:38]]></Time>
+<TimeTick>1632150398</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="71" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T42">
+<Obj plainTxt="False" ><![CDATA[Yes.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:38]]></Time>
+<TimeTick>1632150398</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="73" >
+<Disp><![CDATA[Yes.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T43">
+<Obj plainTxt="False" ><![CDATA[Confirm.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:41]]></Time>
+<TimeTick>1632150401</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="74" >
+<Disp><![CDATA[Confirm.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T44">
+<Obj plainTxt="False" ><![CDATA[Confirm.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:41]]></Time>
+<TimeTick>1632150401</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="76" >
+<Disp><![CDATA[Confirm.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T45">
+<Obj plainTxt="False" ><![CDATA[Main Menu.Select]]></Obj>
+<Details plainTxt="False" ><![CDATA["#7"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:42]]></Time>
+<TimeTick>1632150402</TimeTick>
+<NodeArgs eType="Replay" icon="322" nRep="78" >
+<Disp><![CDATA[Main Menu.Select]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T46">
+<Obj plainTxt="False" ><![CDATA[OK.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:44]]></Time>
+<TimeTick>1632150404</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="80" >
+<Disp><![CDATA[OK.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T47">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:44]]></Time>
+<TimeTick>1632150404</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="81" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T48">
+<Obj plainTxt="False" ><![CDATA[Yes.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:44]]></Time>
+<TimeTick>1632150404</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="83" >
+<Disp><![CDATA[Yes.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T49">
+<Obj plainTxt="False" ><![CDATA[Count Complete.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:48]]></Time>
+<TimeTick>1632150408</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="85" >
+<Disp><![CDATA[Count Complete.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T50">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:06:58]]></Time>
+<TimeTick>1632150418</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="87" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="321" nRep="52" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T51">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[Window]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:02]]></Time>
+<TimeTick>1632150422</TimeTick>
+<Step rID="T52">
+<Obj plainTxt="False" ><![CDATA[Save Print Output As.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:02]]></Time>
+<TimeTick>1632150422</TimeTick>
+<NodeArgs eType="Replay" icon="327" nRep="90" >
+<Disp><![CDATA[Save Print Output As.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="326" nRep="89" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T53">
+<Obj plainTxt="False" ><![CDATA[Oracle Retail Xstore Point]]></Obj>
+<Details plainTxt="False" ><![CDATA[JavaWindow]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:04]]></Time>
+<TimeTick>1632150424</TimeTick>
+<Step rID="T54">
+<Obj plainTxt="False" ><![CDATA[Back_2.Click]]></Obj>
+<Details plainTxt="False" ><![CDATA["LEFT"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:04]]></Time>
+<TimeTick>1632150424</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="93" >
+<Disp><![CDATA[Back_2.Click]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T55">
+<Obj plainTxt="False" ><![CDATA[Yes.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:08]]></Time>
+<TimeTick>1632150428</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="95" >
+<Disp><![CDATA[Yes.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T56">
+<Obj plainTxt="False" ><![CDATA[OK.Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object does not exist"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:11]]></Time>
+<TimeTick>1632150431</TimeTick>
+<NodeArgs eType="Replay" icon="323" nRep="97" >
+<Disp><![CDATA[OK.Exist]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T57">
+<Obj plainTxt="False" ><![CDATA[Back Office Login(st).Exist]]></Obj>
+<Details plainTxt="False" ><![CDATA["Object exists"]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:11]]></Time>
+<TimeTick>1632150431</TimeTick>
+<NodeArgs eType="Replay" icon="329" nRep="98" >
+<Disp><![CDATA[Back Office Login(st).Exist]]></Disp>
+</NodeArgs>
+</Step>
+<NodeArgs eType="Context" icon="321" nRep="92" >
+<Disp><![CDATA[Oracle Retail Xstore Point]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T58">
+<Obj ><![CDATA[Successfully logged out]]></Obj>
+<Details ><![CDATA[Logged out successfully]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:11]]></Time>
+<TimeTick>1632150431</TimeTick>
+<NodeArgs eType="User" icon="325" nRep="99" status="Passed" >
+<Disp><![CDATA[Successfully logged out]]></Disp>
+</NodeArgs>
+</Step>
+<Step rID="T59">
+<Obj plainTxt="False" ><![CDATA[Stop Run]]></Obj>
+<Details plainTxt="False" ><![CDATA[Run stopped by user.]]></Details>
+<Time><![CDATA[9/20/2021 - 16:07:11]]></Time>
+<TimeTick>1632150431</TimeTick>
+<NodeArgs eType="General" icon="330" nRep="100" status="Information" >
+<Disp><![CDATA[Stop Run]]></Disp>
+</NodeArgs>
+</Step>
+<Summary sTime="9/20/2021 - 16:04:18" eTime="9/20/2021 - 16:07:11" passed="4" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartAction" icon="319" nRep="6" status="Passed" >
+<Disp><![CDATA[Action1 Summary]]></Disp>
+</NodeArgs>
+</Action>
+<Summary sTime="9/20/2021 - 16:04:16" eTime="9/20/2021 - 16:07:11" passed="4" failed="0" warnings="0" ></Summary>
+<NodeArgs eType="StartTest" icon="317" nRep="3" status="Passed" >
+<Disp><![CDATA[Test Testcase70_CH_256_01 Summary]]></Disp>
+</NodeArgs>
+</Doc>
+</Report>

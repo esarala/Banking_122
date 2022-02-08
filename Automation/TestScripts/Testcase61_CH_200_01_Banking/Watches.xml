@@ -1,0 +1,6 @@
+﻿<Properties>
+  <WatchEntry0 value="intPISConfirmation" />
+  <WatchEntry1 value="DataTable.Value(&quot;PISConfirmation&quot;)" />
+  <WatchEntry2 value="strLoginType" />
+  <WatchEntry3 value="strLoginType" />
+</Properties>

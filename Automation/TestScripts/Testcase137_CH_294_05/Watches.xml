@@ -1,0 +1,5 @@
+﻿<Properties>
+  <WatchEntry0 value="JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Back_2&quot;).GetROProperty(&quot;enabled&quot;)" />
+  <WatchEntry1 value="JavaWindow(&quot;Oracle Retail Xstore Point&quot;).JavaButton(&quot;Back&quot;).GetROProperty(&quot;enabled&quot;)" />
+  <WatchEntry2 value="strLoginType" />
+</Properties>

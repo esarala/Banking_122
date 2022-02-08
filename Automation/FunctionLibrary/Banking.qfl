@@ -1,0 +1,4013 @@
+﻿'###################################################################################################################
+'Function Name: Login
+'Function Description: Login into Xstore Application
+'Designed By Date: STEFFY
+'Designed Date(MM/DD/YY): 11/11/2020
+'###################################################################################################################
+
+Function LoginXstore(strLoginType,strUsername,strPassword)
+
+	If(JavaWindow("Oracle Retail Xstore Point").JavaButton("Log Off").Exist(2)) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Log Off").Click
+	End If
+	If (strLoginType="Backoffice") Then
+		If (JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Exist(2)) Then
+			JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Click
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").Set strUsername
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").Activate
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").SetSecure strPassword
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").Activate
+
+			If (JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Exist(5)) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+			End If
+
+		Else
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").Set strUsername
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").Activate
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").SetSecure strPassword
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Back Office Login").Activate
+			If (JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Exist(5)) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+			End If
+			
+		End If
+	ElseIf (strLoginType="Till") Then
+		If (JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Exist(2)) Then
+			JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Click
+			wait 2
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Set strUsername
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Activate
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").SetSecure strPassword
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Activate
+			If (JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Exist(5)) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+			End If
+		Else
+			wait 2
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Highlight
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Set strUsername
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Activate
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Highlight
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").SetSecure strPassword
+			JavaWindow("Oracle Retail Xstore Point").JavaEdit("Login").Activate
+			wait 2
+			If (JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Exist(5)) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Override").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+			End If
+			Wait 2
+			If JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Exist(2) Then
+				JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+			End If
+		End If	
+	Else
+		Reporter.ReportEvent micFail, "Unable to login", "Test step Failed"
+	End If
+End Function
+
+
+Function RegisterClose()
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then	
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(3)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+WshShell1.SendKeys"{ENTER}"
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919234"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+IF JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Register Close","Register Close  successful"
+Else
+	Reporter.ReportEvent micFail,"Register Close","Register Close  Unsuccessful"
+End IF
+wait 5
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+'	Wait(2)
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+'Wait(3)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+End Function
+
+
+Function fnOpenTill()
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+Wait(2)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").Exist(2) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'End If
+	
+End Function
+
+
+Function fnTestcase60_CH_200_01()
+
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	Wait(2)
+
+	Set WshShell1 = CreateObject("WScript.Shell")
+
+	WshShell1.SendKeys"{ENTER}"
+
+	Wait(2)
+
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(2)
+	ISVisible=JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm PIS").GetROProperty("displayed")
+	If ISVisible=1 Then
+			Wait(2)
+		 Reporter.ReportEvent micPass, "Banking","Validate ConfirmPIS is Visiable Successfully"
+	   
+	   Else
+		 
+		  Reporter.ReportEvent micFail, "Banking","Validate ConfirmPIS is Visiable Successfully Unsuccessfully"
+		
+		
+	End If
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+
+
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase61_CH_200_01(intPISConfirmation,strLoginType,strUsername,strPassword)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	wait 1
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+'	End If
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set intPISConfirmation
+'	Wait(3)
+'	WshShell1.SendKeys"{ENTER}"
+'	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Banking","Declare till manually successfully"	
+	Else
+		Reporter.ReportEvent micFail,"Banking","Declare till manually Unsuccessfully"
+	End If
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+	End If
+
+
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+	
+	Call LoginXstore(strLoginType,strUsername,strPassword)
+	
+	Call fnOpenTill()
+'
+'	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+'	Wait(2)
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+'	End If
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+'	Wait(2)
+'	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").Exist(3) Then
+'		Wait(2)
+'	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+'	End If
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then		
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'	End If
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase62_CH_200_02(strLoginType,strUsername,strPassword)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#2"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Wait(2)
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(3)
+
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+	'	
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	'End If
+	'OPen the register for further testcases
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+	Call LoginXstore(strLoginType,strUsername,strPassword)
+
+	Call fnOpenTill()
+	
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase67_CH_249_0(strLoginType,strUsername,strPassword)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+		Reporter.ReportEvent micPass,"Back button validated","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Back button validated","Back button validated Unsuccessfully"
+	End If
+	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Help").Exist(2) Then
+		Reporter.ReportEvent micPass,"Help button validated","Help button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Help button validated","Help button validated Unsuccessfully"
+	End If
+
+	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+		Reporter.ReportEvent micPass,"Count Complete button validated","Count Complete button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Count Complete button validated","Count Complete button validated Unsuccessfully"
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Exist(2) Then
+		Reporter.ReportEvent micPass,"Add Tender button validated","Add Tender button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Add Tender button validated","Add Tender button validated Unsuccessfully"
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316"
+'	Wait(3)
+'	WshShell1.SendKeys"{ENTER}"
+'	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Declare till manually successfully","Declare till manually successfully"
+		
+	Else
+		Reporter.ReportEvent micFail,"Declare till manually successfully","Declare till manually Unsuccessfully"
+	End If
+
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(2)
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'	End If
+
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+'	Call LoginXstore(strLoginType,strUsername,strPassword)
+
+	Call fnOpenTill()
+	
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase67_CH_249_01(strLoginType,strUsername,strPassword)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+		Reporter.ReportEvent micPass,"Back button validated","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Back button validated","Back button validated Unsuccessfully"
+	End If
+	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Help").Exist(2) Then
+		Reporter.ReportEvent micPass,"Help button validated","Help button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Help button validated","Help button validated Unsuccessfully"
+	End If
+
+	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+		Reporter.ReportEvent micPass,"Count Complete button validated","Count Complete button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Count Complete button validated","Count Complete button validated Unsuccessfully"
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Exist(2) Then
+		Reporter.ReportEvent micPass,"Add Tender button validated","Add Tender button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Add Tender button validated","Add Tender button validated Unsuccessfully"
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316"
+'	Wait(3)
+'	WshShell1.SendKeys"{ENTER}"
+'	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Declare till manually successfully","Declare till manually successfully"
+		
+	Else
+		Reporter.ReportEvent micFail,"Declare till manually successfully","Declare till manually Unsuccessfully"
+	End If
+
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+	End If
+
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+	Call LoginXstore(strLoginType,strUsername,strPassword)
+
+	Call fnOpenTill()
+	
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase68_CH_249_02()
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	'Wait(2)
+	'Back button validated
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+		Reporter.ReportEvent micPass,"Midday Banking","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Midday Banking","Back button validated Unsuccessfully"
+	End If
+	'Help button validated
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Help").Exist(2) Then
+		Reporter.ReportEvent micPass,"Midday Banking","Help button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Midday Banking","Help button validated Unsuccessfully"
+	End If
+	'Count Complete
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+		Reporter.ReportEvent micPass,"Midday Banking","Count Complete button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Midday Banking","Count Complete button validated Unsuccessfully"
+	End If
+	'Add Tender
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Exist(2) Then
+		Reporter.ReportEvent micPass,"Midday Banking","Add tender Complete button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Midday Banking","Add tender Complete button validated Unsuccessfully"
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Banking Midday","Midday declaration successful"
+	Else
+		Reporter.ReportEvent micFail,"Banking Midday","Midday declaration Unsuccessful"
+	End If
+	wait 5
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase69_CH_249_03(strLoginType,strUsername,strPassword)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#2"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		Reporter.ReportEvent micPass,"Back Button","Back Button verified Successfully"	
+	Else
+		Reporter.ReportEvent micFail,"Back Button","Back Button verified UnSuccessfully"
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Help").Exist(3) Then
+		Reporter.ReportEvent micPass,"Back Button","Help Button verified Successfully"	
+	Else
+		Reporter.ReportEvent micFail,"Back Button","Help Button verified UnSuccessfully"	
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Ok").Exist(3) Then
+		Reporter.ReportEvent micPass,"Back Button","OK Button verified Successfully"	
+	Else
+		Reporter.ReportEvent micFail,"Back Button","OK Button verified UnSuccessfully"
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Exist(3) Then
+		Reporter.ReportEvent micPass,"Back Button","Till Button verified Successfully"	
+	Else
+		Reporter.ReportEvent micFail,"Back Button","Till Button verified UnSuccessfully"	
+	End If
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Wait(6)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(3)
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	'End If
+
+	'OPen the register for further testcases
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+	Call LoginXstore(strLoginType,strUsername,strPassword)
+	
+	Call fnOpenTill()
+	
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase70_CH_256_01(intPISConfirmation,strLoginType,strUsername,strPassword)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set intPISConfirmation
+'	Wait(3)
+'	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+	End If
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+	End If
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+	Call LoginXstore(strLoginType,strUsername,strPassword)
+	
+	Call fnOpenTill()
+	
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase78_CH_294_03(intPISConfirmation,intQty,strLoginType)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then	
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+		If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+			JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+		Else
+			JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		End If
+		
+		Reporter.ReportEvent micFail,"Selected tender should be unique"," Selected tender already displayed cross verify the data"
+		Call Logout(strLoginType)
+		exitrun
+		Exit Function 
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+	wait 1
+	WshShell1.SendKeys"{ENTER}"
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set intQty
+	Wait(2)
+	WshShell1.SendKeys"{ENTER}"
+	wait 2
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set intPISConfirmation
+	Wait(2)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+		Reporter.ReportEvent micWarning,"PIS Number should not be used in another collection bag","PIS Number used in another collection bag update it"
+		Call Logout(strLoginType)
+		exitrun
+	End If
+	IF JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Midday cash declaration","Midday cash declaration successful"
+	Else
+		Reporter.ReportEvent micFail,"Midday cash declaration","Midday cash declaration Unsuccessful"
+	End  IF
+	wait 15
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(120) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	
+End Function
+
+
+Function Testcase74_CH_280_01()
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#2"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	Reporter.ReportEvent micPass,"Back Button","Back Button verified Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Back Button","Back Button verified UnSuccessfully"
+End If
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Help").Exist(3) Then
+	Reporter.ReportEvent micPass,"Back Button","Help Button verified Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Back Button","Help Button verified UnSuccessfully"	
+End If
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Ok").Exist(3) Then
+	Reporter.ReportEvent micPass,"Back Button","OK Button verified Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Back Button","OK Button verified UnSuccessfully"
+End If
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Exist(3) Then
+	Reporter.ReportEvent micPass,"Back Button","Till Button verified Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Back Button","Till Button verified UnSuccessfully"	
+End If
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919123"
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(3)
+	
+End Function
+
+Function Testcase75_CH_293_01()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Reporter.ReportEvent micPass, "Banking","Summary screen validated Successfully"
+Else  
+    Reporter.ReportEvent micFail, "Banking","Summary screen validated  Unsuccessfully"
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+wait 5
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+wait 2
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'End If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'End If
+Call fnOpenTill()
+
+End Function
+
+
+Function Testcase76_CH_294_01()
+		
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	Wait(2)
+	
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	Wait(2)
+	WshShell1.SendKeys"{F4}"
+	Wait(2)
+	WshShell1.SendKeys"{F2}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+		
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+	Wait(2)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+	Wait(2)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	End If
+	Wait(4)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919123"
+	Wait(3)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+	End If
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Wait(2)
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(2)
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'	End If
+	
+	
+	'Open the store for next testcase
+	
+	'login to xstore again
+	
+	wait 2
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+	
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	End If
+	
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	
+	End If
+	
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	End If
+	
+	Wait(2)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+
+End Function
+
+
+
+
+Function Testcase77_CH_294_02()
+	
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+wait 2
+WshShell1.SendKeys"{ENTER}"
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919234"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+IF JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Midday cash declaration","Midday cash declaration successful"
+Else
+	Reporter.ReportEvent micFail,"Midday cash declaration","Midday cash declaration Unsuccessful"
+End  IF
+wait 6
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(3)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'End If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'End If
+
+
+End Function
+
+
+
+Function Testcase79_CH_294_04()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+wait 2
+If Not JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Exist(5) Then
+	WshShell1.SendKeys"{ENTER}"
+End If
+
+WshShell1.SendKeys"{DOWN}"
+Wait 1
+WshShell1.SendKeys"{DOWN}"
+Wait 1
+WshShell1.SendKeys"{DOWN}"
+Wait 1
+WshShell1.SendKeys"{DOWN}"
+Wait 1
+WshShell1.SendKeys"{DOWN}"
+Wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(2)
+WshShell1.SendKeys"{F2}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "200.20"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919213"
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Wait(2)
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+
+'Open the store for next testcase
+
+'login to xstore again
+Call fnOpenTill()
+
+'JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+'
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+'End If
+'
+'Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'End If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+'End If
+'Wait(2)
+'If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+'	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+'End If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'End If
+End  Function
+
+
+Function Testcase80_CH_294_04()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("DtvList").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("DtvList").Select "#6"
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(3)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "200.29"
+Wait(2)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919215"
+
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+End Function
+
+
+
+
+Function Testcase81_CH_294_04()
+	
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(3)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(3)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "255.29"
+Wait(2)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919226"
+
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+wait 5
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+wait 3
+
+End Function
+
+Function Testcase82_CH_294_05()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(2)
+WshShell1.SendKeys"{F2}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.20"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919423"
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(7)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+Call fnOpenTill()
+
+End Function
+
+
+Function Testcase83_CH_294_05()
+	
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+Wait(2)
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(3)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.29"
+Wait(2)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919654"
+
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+End Function
+
+
+
+
+ Function Testcase84_CH_294_05()
+ 	
+ 
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(3)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+Wait(2)
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(3)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.29"
+Wait(2)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919477"
+
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+wait 5
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+
+Set WshShell1= Nothing
+
+End Function
+
+
+
+
+Function Testcase85_CH_294_06()
+	
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+WshShell1.SendKeys"{DOWN}"
+WshShell1.SendKeys"{DOWN}"
+WshShell1.SendKeys"{DOWN}"
+WshShell1.SendKeys"{DOWN}"
+WshShell1.SendKeys"{DOWN}"
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+
+
+Wait(2)
+
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.20"
+
+Wait(2)
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(4)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919765"
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+	
+	Else
+		Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Wait(2)
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(5) Then
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+
+Call fnOpenTill()
+
+End Function
+
+
+Function Testcase87_CH_294_06(intPISConfirmation)
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(3)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+Wait(2)
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(3)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.29"
+Wait(2)
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set intPISConfirmation
+wait 2
+WshShell1.SendKeys"{ENTER}" 
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+End If
+wait 5
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+wait 2
+
+
+End Function
+
+
+Function Testcase88_CH_297_01()
+	
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+wait 1
+WshShell1.SendKeys"{DOWN}"
+wait 1
+'WshShell1.SendKeys"{DOWN}"
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+
+Wait(2)
+
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.20"
+
+Wait(2)
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+
+
+Wait(4)
+If JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Exist(3) Then
+Reporter.ReportEvent micFail,"F2 key validation","F2 key can be used to edit amount field"
+
+Else
+Reporter.ReportEvent micPass,"F2 key validation","F2 key cannot  be used to edit amount field"
+End  If
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(5) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End  If
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'
+'
+End Function
+
+
+
+ Function Testcase89_CH_297_02()
+ 	
+ 
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+'
+'WshShell1.SendKeys"{ENTER}"
+'Wait(2)
+'WshShell1.SendKeys"{DOWN}"
+'wait 1
+'WshShell1.SendKeys"{DOWN}"
+'wait 1
+'WshShell1.SendKeys"{DOWN}"
+'wait 1
+'WshShell1.SendKeys"{DOWN}"
+''WshShell1.SendKeys"{DOWN}"
+'wait 1
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+'
+Wait(2)
+
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.20"
+
+Wait(2)
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+
+
+Wait(4)
+If JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Exist(3) Then
+Reporter.ReportEvent micFail,"F2 key validation","F2 key can be used to edit amount field"
+
+Else
+Reporter.ReportEvent micPass,"F2 key validation","F2 key cannot  be used to edit amount field"
+End  If
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End  If
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'
+End Function
+
+
+Function Testcase90_CH_297_02()
+	
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+
+
+'JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#"
+'
+Wait(2)
+'
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+'
+'WshShell1.SendKeys"{ENTER}"
+
+'Wait(2)
+'WshShell1.SendKeys"{DOWN}"
+'WshShell1.SendKeys"{DOWN}"
+'WshShell1.SendKeys"{DOWN}"
+''WshShell1.SendKeys"{DOWN}"
+''WshShell1.SendKeys"{DOWN}"
+'
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+'
+'Wait(2)
+
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.20"
+
+Wait(2)
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+
+
+Wait(4)
+If JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Exist(3) Then
+Reporter.ReportEvent micFail,"F2 key validation","F2 key can be used to edit amount field"
+
+Else
+Reporter.ReportEvent micPass,"F2 key validation","F2 key cannot  be used to edit amount field"
+End  If
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End  If
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'
+End Function
+
+
+
+Function Testcase91_CH_301_01()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	 Reporter.ReportEvent micPass, "Banking","Summary screen validated Successfully"
+Else   
+      Reporter.ReportEvent micFail, "Banking","Summary screen validated  Unsuccessfully"
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Help").Exist(3) Then
+	 Reporter.ReportEvent micPass, "Banking","Summary screen validated Successfully"
+Else   
+    Reporter.ReportEvent micPass, "Banking","Summary screen validated  Unsuccessfully"	
+End If
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	 Reporter.ReportEvent micPass, "Banking","Summary screen validated Successfully"
+Else     
+      Reporter.ReportEvent micFail, "Banking","Summary screen validated  Unsuccessfully"	
+End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	wait 5
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(3)
+	Call fnOpenTill()
+End Function
+
+
+
+Function Testcase98_EXP_09_32()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919516"
+'Wait(3)
+'WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Declare till manually successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Declare till manually Unsuccessfully"
+End If
+
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+
+'Open the store for next testcase
+
+'login to xstore again
+
+'RunAction "Action1 [Registeropen]", oneIteration
+
+Call fnOpenTill()
+End Function
+
+
+
+Function Testcase99_EXP_09_79()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(1)
+'WshShell1.SendKeys"{ENTER}"
+'wait 1
+'WshShell1.SendKeys"{DOWN}"
+'wait 1
+WshShell1.SendKeys"{F2}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then	
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(4)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316"
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Wait(2)
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+'Open the store for next testcase
+
+'login to xstore again
+
+Call fnOpenTill()
+
+End Function
+
+
+
+Function Testcase100_EXP_09_99()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+wait 2
+WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(2)
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+  JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+  Wait(2)
+  JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "7600.34"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919112"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(5)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Reporter.ReportEvent micPass,"Alert message for threshould value","Alert message for threshould value successfully"
+Else
+Reporter.ReportEvent micFail,"Alert message for threshould value failed","Alert message for threshould value Unsuccessfully"
+End If
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+'This if cond will not appear regularly so set that existance to 10 sec
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(10) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End Function 
+
+Function Testcase101_EXP_09_114()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(2)
+WshShell1.SendKeys"{F2}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+End If
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919616"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"	
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+
+Wait(15)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+
+End Function
+
+
+
+
+
+
+Function Testcase102_EXP_09_04()
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set "243234323534"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+Wait(3)
+If Javawindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Exist(3) Then
+	Reporter.ReportEvent micPass,"Banking Collection reference","Validating the collection reference successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking Collection reference","Validating the collection reference successfully"
+End  If 
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End Function
+
+
+
+
+
+Function Testcase103_EXP_09_07(intBagReference)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+wait 2
+WshShell1.SendKeys"{ENTER}"
+Wait(5)
+WshShell1.SendKeys"{F3}"
+Wait(3)
+WshShell1.SendKeys"{F3}"
+Wait(3)
+'Add amount
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set "22.22"
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+Wait(2)
+'Justification field
+ Javawindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set "Test"
+ Wait(2)
+ 'Justification field
+' Javawindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+ 
+ JavaWindow("Oracle Retail Xstore Point").JavaButton("DiscountScreenConfirm").Click
+wait 3
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Reporter.ReportEvent micPass,"Edit PIS validation","Edit PIS validation is successfully"
+Else
+Reporter.ReportEvent micFail,"Edit PIS validation","Edit PIS validation is Unsuccessfully"
+End  If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'End  If
+wait 3
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(5) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End If
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'wait 2
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End Function
+
+
+
+
+
+Function Testcase104_EXP_09_49(intBagReference)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+wait 2
+WshShell1.SendKeys"{ENTER}"
+Wait(5)
+WshShell1.SendKeys"{F3}"
+Wait(3)
+WshShell1.SendKeys"{F3}"
+Wait(3)
+'Add amount
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set "22.22"
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+Wait(2)
+'Justification field
+ Javawindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set "Test"
+ Wait(2)
+ 'Justification field
+' Javawindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+ 
+ JavaWindow("Oracle Retail Xstore Point").JavaButton("DiscountScreenConfirm").Click
+wait 3
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Reporter.ReportEvent micPass,"Edit PIS validation","Edit PIS validation is successfully"
+Else
+Reporter.ReportEvent micFail,"Edit PIS validation","Edit PIS validation is Unsuccessfully"
+End  If
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'End  If
+wait 3
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(5) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End If
+
+End Function
+
+
+
+Function Testcase105_EXP_09_50()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+
+Wait(2)
+
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "7600.34"
+
+Wait(2)
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(4)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919223"
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Reporter.ReportEvent micPass,"Alert message for threshould value","Alert message for threshould value successfully"
+Else
+Reporter.ReportEvent micFail,"Alert message for threshould value failed","Alert message for threshould value Unsuccessfully"
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(8) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End Function
+
+
+
+Function Testcase106_EXP_09_54()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+
+
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.20"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Exist(3) Then
+Reporter.ReportEvent micFail,"F2 key validation","F2 key can be used to edit amount field"
+
+Else
+Reporter.ReportEvent micPass,"F2 key validation","F2 key cannot  be used to edit amount field"
+End  If
+
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End  If
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+
+End Function
+
+Function NonIMEISaleBondbonus(intPLU, intVoucher, intVoucherAmt)
+	
+'Wait(3)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter PLU or IMEI").Set intPLU
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Total").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaCheckBox("icon-checkbox").Set "ON"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaList("Sale Payment Options").Select "#2"
+'select Bond Bonus
+Wait(2)
+Set WshShell = CreateObject("WScript.Shell")
+wait 1
+WshShell.SendKeys"{Down}"
+wait 1
+WshShell.SendKeys"{Down}"
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucher
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucherAmt
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If  JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End  If 
+Wait(3)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click	
+End If
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Click
+End If
+
+	
+End Function
+
+
+Function NonIMEISaleCapitalIncentive(intPLU, intVoucher, intVoucherAmt)
+	
+'Wait(3)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter PLU or IMEI").Set intPLU
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Total").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaCheckBox("icon-checkbox").Set "ON"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaList("Sale Payment Options").Select "#2"
+'select Bond Bonus
+Wait(2)
+Set WshShell = CreateObject("WScript.Shell")
+wait 1
+WshShell.SendKeys"{Down}"
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucher
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucherAmt
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If  JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End  If 
+Wait(3)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(20) Then
+Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click	
+End If
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Click
+End If
+
+End Function
+
+Function fnTestcase110_EXP_09_61(strLoginType,strUsername,strPassword,intQty,intPISConfirmation)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+	Wait(2)
+	WshShell1.SendKeys"{F4}"
+	Wait(2)
+	WshShell1.SendKeys"{F2}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+		Wait(2)
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+	Wait(2)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "10.34"
+	Wait(2)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+	Wait(4)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919616"
+	Wait(3)
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+		Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+	End If
+	Wait(5)
+	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+	End If
+	Wait(2)
+	Call fnOpenTill()
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'	End If
+	'Open the store for next testcase
+	'login to xstore again
+	'RunAction "Action1 [Login]", oneIteration
+
+'	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+'	Wait(2)
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+'	End If
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+'	Wait(2)
+'	If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").Exist(3) Then
+'		Wait(2)
+'		Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+'	End If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	'End If
+
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase112_EXP_09_108(intBagReference,intAmount,strJustification)
+
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu_old").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu_old").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(3)
+	WshShell1.SendKeys"{F3}"
+	Wait(2)
+	WshShell1.SendKeys"{F3}"
+	Wait(2)
+	'Add amount
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set intAmount
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+	Wait(2)
+	'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set strJustification
+	 Wait(3)
+	 'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(15) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Edit PIS validation","Edit PIS validation is successfully"
+	Else
+		Reporter.ReportEvent micFail,"Edit PIS validation","Edit PIS validation is Unsuccessfully"
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(15) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Exist(15) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(5) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").Click
+	End If
+	
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+'		Wait(8)
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+
+End Function
+
+
+
+'###################################################################################################################
+Function fnTestcase113_EXP_09_14(intBagReference,intAmount,strJustification)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(10)
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	'Add amount
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set intAmount
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+	Wait(2)
+	'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set strJustification
+	 Wait(2)
+	 'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	 Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(8) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Edit PIS validation","Edit PIS validation is successfully"
+	Else
+		Reporter.ReportEvent micFail,"Edit PIS validation","Edit PIS validation is Unsuccessfully"
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(8) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Exist(8) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Click
+'	End If
+	
+'	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+	Wait(3)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").Click
+	Wait(3)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+'	Wait(8)
+	End If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'Wait(8)
+	'End  If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'End If
+
+End Function
+
+
+'###################################################################################################################
+
+Function fnTestcase114_EXP_09_40()
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+		Reporter.ReportEvent micPass,"Collection refernce validation","Collection referernce validation without entering the data successfully"
+	Else
+		Reporter.ReportEvent micFail,"Collection refernce validation","Collection referernce validation without entering the data Unsuccessfully"
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Back button validate","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Back button validate","Back button validated Unsuccessfully"
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+		Wait(8)
+	End If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'Wait(8)
+	'End  If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'End If 
+End Function
+
+
+'###################################################################################################################
+Function fnTestcase115_EXP_09_83()
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+		Reporter.ReportEvent micPass,"Collection refernce validation","Collection referernce validation without entering the data successfully"
+	Else
+		Reporter.ReportEvent micFail,"Collection refernce validation","Collection referernce validation without entering the data Unsuccessfully"
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Back button validate","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Back button validate","Back button validated Unsuccessfully"
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+		Wait(8)
+	End If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'Wait(8)
+	'End  If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'End If 
+
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase116_EXP__09_103(intBagReference,intAmount,strJustification)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(10)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Edit PIS").Exist(3) Then
+		WshShell1.SendKeys"{F3}"
+		Reporter.ReportEvent micPass,"Edit PIS button validated","Edit PIS button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Edit PIS button validated","Edit PIS button validated Unsuccessfully"
+	End  If
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	'Add amount
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set intAmount
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+	Wait(2)
+	'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set strJustification
+	 Wait(2)
+	 'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	 Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Edit PIS validation","Edit PIS validation is successfully"
+	Else
+		Reporter.ReportEvent micFail,"Edit PIS validation","Edit PIS validation is Unsuccessfully"
+	End  If
+	wait 2
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+	buttonaStatus = Trim(JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").GetROProperty("enabled"))
+	If buttonaStatus = "1" Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+'		Wait(8)
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'	End If
+End Function
+
+'###################################################################################################################
+Function fnTestcase118_EXP_09_13(intBagReference)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(3)
+	If Javawindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Exist(3) Then
+		Wait(2)
+		Reporter.ReportEvent micPass,"Banking Collection reference","Validating the collection reference successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking Collection reference","Validating the collection reference successfully"
+	End  If 
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	End If
+	
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase119_EXP_09_106(intBagReference)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+		Reporter.ReportEvent micPass,"New button validated","New button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"New Button validation","New button validation Unsuccessful"
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(3)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Edit PIS").Exist(3) Then
+	Reporter.ReportEvent micPass,"Edit PIS button validated","Edit PIS button validated successfully"
+	Else
+	Reporter.ReportEvent micFail,"Edit PIS Button validation","Edit PIS button validation Unsuccessful"
+	End If
+
+'	Wait(2)
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").Exist(3) Then
+'	Reporter.ReportEvent micPass,"Delete button validated","Delete button validated successfully"
+'	Else
+'	Reporter.ReportEvent micFail,"Delete Button validation","Delete button validation Unsuccessful"
+'	End If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	End If
+End Function
+
+'###################################################################################################################
+Function fnTestcase120_EXP_09_122(intBagReference)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(3)
+	'If Javawindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Exist(3) Then
+	'Wait(2)
+	'Reporter.ReportEvent micPass,"Banking Collection reference","Validating the collection reference successfully"
+	'Else
+	'Reporter.ReportEvent micFail,"Banking Collection reference","Validating the collection reference successfully"
+	'End  If 
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Back button validated","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Back button validated","Back button validated Unsuccessfully"
+	End  If
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	End If
+
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase121_EXP_09_123(intBagReference)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+		Reporter.ReportEvent micPass,"Back button validated","Back button validated successfully"
+	Else
+		Reporter.ReportEvent micFail,"Back button validated","Back button validated Unsuccessfully"
+	End  If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	End If
+	
+
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase122_EXP_09_45(intBagReference)
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6" 
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#3"
+	'validate Back button
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+		Reporter.ReportEvent micPass,"Banking","Back button successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking","Back button validated  Usuccessfully"
+	End If
+
+	'Validate update float management button 
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Update Float Amount").Exist(2) Then
+		Reporter.ReportEvent micPass,"Banking","Update Float Amount button validated  successfully"
+		Else
+		Reporter.ReportEvent micFail,"Banking","Update Float Amount button validated  successfully"
+	End If
+	'Validate Enable cash button 
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Enable Cash").Exist(3) Then
+		Reporter.ReportEvent micPass,"Banking","Enable Cash validated  successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking","Enable Cash validated  Unsuccessfully"
+	End If
+	'Validate disable cash button 
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Disable Cash").Exist(3) Then
+		Reporter.ReportEvent micPass,"Banking","Disable Cash validated  successfully"
+	Else
+		Reporter.ReportEvent micFail,"Banking","Disable Cash validated  Unsuccessfully"
+	End If
+
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	'Wait(2)
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+	'Wait(2)
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+End Function
+
+'###################################################################################################################
+	
+Function fnTestcase123_EXP_09_51(intBagReference,strCollectionBagMaintenance,intAmount)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait(5)
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	'Add amount
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set intAmount
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set "Test"
+	wait 2
+	'Justification field
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	wait 2
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(8) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Wait(3)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Click
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+'	Wait(8)
+	End If
+
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'Wait(8)
+	'End  If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+End Function
+	
+'###################################################################################################################
+
+Function fnTestcase124_EXP_09_66(intBagReference,intBagReference1,intAmount,strJustification)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	wait 1
+	WshShell1.SendKeys"{ENTER}"
+	Wait(10)
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	WshShell1.SendKeys"{F3}"
+	Wait(3)
+	'Add amount
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("£0.00").Set intAmount
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Reason").Select "UnKnown Discrepancy"
+	Wait(2)
+	'Justification field
+	 JavaWindow("Oracle Retail Xstore Point").JavaEdit("Collection Bag Maintenance").Set strJustification
+	 Wait(2)
+	 'Justification window confirmation
+	 JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	 Wait(3)
+	  JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+	 Wait(2)
+	 If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	 End If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	'Wait(2)
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'Reporter.ReportEvent micPass,"Edit PIS validation","Edit PIS validation is successfully"
+	'Else
+	'Reporter.ReportEvent micFail,"Edit PIS validation","Edit PIS validation is Unsuccessfully"
+	'End  If
+	Wait(3)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Click
+	Wait(3)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Delete").Click
+	Wait(3)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click	
+	End If
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference1
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{ENTER}"
+	Wait 5
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+		Reporter.ReportEvent micPass,"Same Bag refernce","Same Bag refernce validation successful"
+	Else
+		Reporter.ReportEvent micFail,"Same Bag refernce","Same Bag refernce validation Unsuccessful"
+	End If	 
+	 If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	 
+	 If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	Wait(8)
+	End If
+
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	Wait(8)
+	End  If
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'	End If
+End Function
+
+'###################################################################################################################
+Function fnTestcase125_EXP_09_69(intBagReference)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	wait 2
+	WshShell1.SendKeys"{F2}"
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Exist(2) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Add selected PIS to Bag").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(10) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click	
+		Reporter.ReportHtmlEvent micPass,"Warning message validation","Warning message NO PIS Selected verified"
+	Else
+		Reporter.ReportHtmlEvent micFail,"Warning message validation","Warning message NO PIS Selected verified"
+	End If
+	 If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	 If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	 
+	 If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	End If
+
+'	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+'		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+'	End  If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'End If
+	 Set WshShell1= Nothing
+End Function
+
+'###################################################################################################################
+
+Function Testcase126_EXP_09_78()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set datatable("Bagreference",dtglobalsheet)
+'
+Wait(2)
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{F4}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("PIS Details").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+End If
+ If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	Reporter.ReportEvent micPass,"Back button lands into collection maintenance screen","Back button lands into collection maintenance screen"
+Else
+	Reporter.ReportEvent micFail,"Back button does not land into collection maintenance screen","Back button does not land into collection maintenance screen"
+End If
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+End If
+End  Function
+
+'###################################################################################################################
+Function fnTestcase127_EXP_09_93()
+
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	'JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	'Wait(2)
+	'JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	'
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{F4}"
+	Wait(3)
+	WshShell1.SendKeys"{F5}"
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(10) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Remove PIS confirmation message","Remove PIS confirmation message is successful"
+	Else
+	Reporter.ReportEvent micPass,"Remove PIS confirmation message","Remove PIS confirmation message is Unsuccessful"	
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	Wait(3)
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	Wait(3)
+	End  If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'End If
+End Function
+
+'###################################################################################################################
+
+Function fnTestcase128_EXP_09_98(intBagReference)
+
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#1"
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("New").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Collection Bag Reference").Set intBagReference
+	'
+	Wait(2)
+	Set WshShell1 = CreateObject("WScript.Shell")
+	WshShell1.SendKeys"{F2}"
+	Wait(2)
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Reporter.ReportEvent micPass,"Validate warning message Collection bag Id already in use","Validate warning message 'Collection bag id alrady exist'is successful"
+	Else
+	Reporter.ReportEvent micPass,"Validate warning message Collection bag Id already in use","Validate warning message 'Collection bag id alrady exist'is successful"
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Exist(3) Then
+		JavaWindow("Oracle Retail Xstore Point").JavaButton("Cancel").Click
+	End If
+	If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	End  If
+	'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+		'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+	'End If
+
+End Function
+
+
+
+Function Testcase129_EXP_09_94(intQty, intPISConfirmation)
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu_old").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu_old").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+wait 1
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(2)
+WshShell1.SendKeys"{F2}"
+Wait(2)
+
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set intQty
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set intPISConfirmation
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Reporter.ReportEvent micPass,"Alert message for threshould value","Alert message for threshould value successfully"
+Else
+Reporter.ReportEvent micFail,"Alert message for threshould value failed","Alert message for threshould value Unsuccessfully"
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+End Function
+
+Function Testcase131_EXP_09_85()
+	
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#3"
+'validate Back button
+wait 2
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+	Reporter.ReportEvent micPass,"Banking","Back button successfully"
+	Else
+	Reporter.ReportEvent micFail,"Banking","Back button validated  Usuccessfully"
+End If
+
+'Validate update float management button 
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Update Float Amount").Exist(2) Then
+	Reporter.ReportEvent micPass,"Banking","Update Float Amount button validated  successfully"
+	Else
+	Reporter.ReportEvent micFail,"Banking","Update Float Amount button validated  successfully"
+End If
+'Validate Enable cash button 
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Enable Cash").Exist(3) Then
+	Reporter.ReportEvent micPass,"Banking","Enable Cashvalidated  successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Enable Cash validated  Unsuccessfully"
+End If
+'Validate disable cash button 
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Disable Cash").Exist(3) Then
+	Reporter.ReportEvent micPass,"Banking","Disable Cash validated  successfully"
+Else	
+	Reporter.ReportEvent micFail,"Banking","Disable Cash validated  Unsuccessfully"
+End If
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+
+End Function
+
+
+
+Function Testcase107_EXP_09_56()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+'WshShell1.SendKeys"{F4}"
+'Wait(2)
+'WshShell1.SendKeys "{ }"
+'wait 1
+'WshShell1.SendKeys"{DOWN}"
+'wait 1
+'WshShell1.SendKeys "{ }"
+'wait 1
+'WshShell1.SendKeys"{F2}"
+'Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then	
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'End If
+'Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "BONUS BOND"
+Wait(2)
+'WshShell1.SendKeys"{ENTER}"
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+'Wait(2)
+'WshShell1.SendKeys"{ENTER}"
+'Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'Wait(4)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316" ' CHECK THE FDM CONFIG WHEN ASKING FOR PIS AND BANKABLE NEEDS TO CHECKED
+'Wait(3)
+'WshShell1.SendKeys"{ENTER}"
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+'Open the store for next testcase
+
+'login to xstore again
+
+Call fnOpenTill()
+
+End Function
+
+
+
+Function Testcase111_EXP_09_65()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+'WshShell1.SendKeys"{F4}"
+'Wait(2)
+'WshShell1.SendKeys "{ }"
+'wait 1
+'WshShell1.SendKeys"{DOWN}"
+'wait 1
+'WshShell1.SendKeys "{ }"
+'wait 1
+'WshShell1.SendKeys"{F2}"
+'Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then	
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+'	Wait(2)
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'End If
+'Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "GIFT VOUCHER"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+'Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "690.00"
+'Wait(2)
+WshShell1.SendKeys"{ENTER}"
+'Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'Wait(4)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316" ' CHECK THE FDM CONFIG WHEN ASKING FOR PIS AND BANKABLE NEEDS TO CHECKED
+'Wait(3)
+'WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+'If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Exist(3) Then
+'	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click	
+'End If
+
+'Open the store for next testcase
+
+'login to xstore again
+
+Call fnOpenTill()
+
+End Function
+
+
+
+Function NonIMEIsaleGiftvouher(intPLU, intQty, intVoucher, intVoucherAmt)
+	
+'Wait(3)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter PLU or IMEI").Set intPLU
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Change Product").Click
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Change Quantity").Click
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Quantity").Set intQty
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Total").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaCheckBox("icon-checkbox").Set "ON"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaList("Sale Payment Options").Select "#2"
+'Wait(2)
+'Set WshShell = CreateObject("WScript.Shell")
+'wait 1
+'WshShell.SendKeys"{Down}"
+'wait 1
+'WshShell.SendKeys"{Down}"
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucher
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucherAmt
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If  JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End  If 
+Wait(3)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(20) Then
+Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click	
+End If
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Click
+End If
+
+	
+End Function
+
+Function Testcase108_EXP_09_57()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'Wait(4)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316" ' CHECK THE FDM CONFIG WHEN ASKING FOR PIS AND BANKABLE NEEDS TO CHECKED
+'Wait(3)
+'WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+
+'login to xstore again
+
+Call fnOpenTill()
+
+End Function
+
+
+Function NonIMEIsaleCustcaredeclaration(intPLU, intVoucher, intVoucherAmt)
+	
+'Wait(3)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Till").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter PLU or IMEI").Set intPLU
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Total").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaCheckBox("icon-checkbox").Set "ON"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(2) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+End If
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaList("Sale Payment Options").Select "#2"
+'select Bond Bonus
+Wait(2)
+Set WshShell = CreateObject("WScript.Shell")
+wait 1
+WshShell.SendKeys"{Down}"
+wait 1
+WshShell.SendKeys"{Down}"
+wait 1
+WshShell.SendKeys"{Down}"
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucher
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("VOUCHER").Set intVoucherAmt
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Enter").Click
+Wait(2)
+If  JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+End  If 
+Wait(3)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(20) Then
+Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click	
+End If
+Wait(3)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back Office").Click
+End If
+
+End Function
+
+
+Function Testcase109_EXP_09_58()
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CUST CARE 10.00 VCH"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+'Wait(4)
+'JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919316" ' CHECK THE FDM CONFIG WHEN ASKING FOR PIS AND BANKABLE NEEDS TO CHECKED
+'Wait(3)
+'WshShell1.SendKeys"{ENTER}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+
+
+'login to xstore again
+
+Call fnOpenTill()
+
+End Function
+
+
+
+Function Testcase96_EXP_09_30()
+	
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#7"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Set WshShell1 = CreateObject("WScript.Shell")
+Wait(2)
+'	WshShell1.SendKeys"{DOWN}"
+'	wait 1
+'	WshShell1.SendKeys"{DOWN}"
+'	wait 1
+'	WshShell1.SendKeys"{DOWN}"
+'	wait 1
+'	WshShell1.SendKeys"{DOWN}"
+'	wait 1
+'	WshShell1.SendKeys"{DOWN}"
+'	Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Add Tender").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Confirm").Click
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	
+JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+Wait(3)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+WshShell1.SendKeys"{ENTER}"
+wait 1
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+wait 2
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919234"
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+IF JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+Reporter.ReportEvent micPass,"Register Close","Register Close  successful"
+Else
+Reporter.ReportEvent micFail,"Register Close","Register Close  Unsuccessful"
+End  IF
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(3)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+'Wait(2)
+'JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End Function
+
+
+
+Function Testcase97_EXP_09_31()
+
+
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#6"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Main Menu").Select "#0"
+Wait(2)
+
+Set WshShell1 = CreateObject("WScript.Shell")
+
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	wait 1
+	WshShell1.SendKeys"{DOWN}"
+	Wait(2)
+
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Manual Declare").Click
+Wait(2)
+WshShell1.SendKeys"{F4}"
+Wait(2)
+WshShell1.SendKeys"{F2}"
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("OK").Click
+	Wait(2)
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back_2").Click
+End If
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaList("Declare Till / Mid-Day").Select "CASH"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("Enter Expected Quantity").Set "20.34"
+
+Wait(2)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+JavaWindow("Oracle Retail Xstore Point").JavaButton("Count Complete").Click
+Wait(4)
+JavaWindow("Oracle Retail Xstore Point").JavaEdit("PIS Confirmation").Set "919116"
+Wait(3)
+WshShell1.SendKeys"{ENTER}"
+Wait(2)
+
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Exist(30) Then	
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Yes").Click
+	Reporter.ReportEvent micPass,"Banking","Confirmation screen is displayed Successfully"
+Else
+	Reporter.ReportEvent micFail,"Banking","Confirmation screen is displayed UnSuccessfully"
+End If
+Wait(5)
+If Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").Exist(90) Then
+	Window("Oracle Retail Xstore Point").Dialog("Save Print Output As").WinButton("Cancel").Click
+End If
+Wait(2)
+If JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Exist(3) Then
+	JavaWindow("Oracle Retail Xstore Point").JavaButton("Back").Click	
+End If
+
+
+'Open the store for next testcase
+
+'login to xstore again
+
+End Function
